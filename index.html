@@ -2272,7 +2272,10 @@
         const archive = document.getElementById("t-archive");
 
         try {
-          const res = await fetch(`${SHEET_READ_URL}?action=read`);
+          const res = await fetch(SHEET_READ_URL, {
+            method: "GET",
+            redirect: "follow",
+          });
           const data = await res.json(); // verwacht array van {naam, titel, bericht}
 
           container.innerHTML = "";

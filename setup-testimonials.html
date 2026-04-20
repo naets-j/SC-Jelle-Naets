@@ -200,51 +200,43 @@
         <pre>
 const SHEET_NAME = "Blad1"; // pas aan als jouw tabblad anders heet
 
+// GET — leest goedgekeurde testimonials
 function doGet(e) {
-  return handleRequest(e);
-}
-
-function doPost(e) {
-  return handleRequest(e);
-}
-
-function handleRequest(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet()
                               .getSheetByName(SHEET_NAME);
+  const rows  = sheet.getDataRange().getValues();
+  const data  = [];
 
-  // Lees goedgekeurde testimonials op (GET)
-  if (!e.postData) {
-    const rows = sheet.getDataRange().getValues();
-    const headers = rows[0]; // eerste rij = headers
-    const data = [];
-
-    for (let i = 1; i < rows.length; i++) {
-      const row = rows[i];
-      const goedgekeurd = String(row[4]).toUpperCase();
-      if (goedgekeurd === "TRUE") {
-        data.push({
-          naam:    row[1],
-          titel:   row[2],
-          bericht: row[3]
-        });
-      }
+  for (let i = 1; i < rows.length; i++) {
+    const row         = rows[i];
+    const goedgekeurd = String(row[4]).toUpperCase();
+    if (goedgekeurd === "TRUE") {
+      data.push({
+        naam:    row[1],
+        titel:   row[2],
+        bericht: row[3]
+      });
     }
-
-    return ContentService
-      .createTextOutput(JSON.stringify(data))
-      .setMimeType(ContentService.MimeType.JSON);
   }
 
-  // Schrijf nieuw bericht weg (POST)
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// POST — schrijft nieuw bericht weg
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet()
+                              .getSheetByName(SHEET_NAME);
   try {
     const body = JSON.parse(e.postData.contents);
     if (body.action === "write") {
       sheet.appendRow([
-        new Date(),     // Timestamp
-        body.naam,      // Naam
-        body.titel,     // Titel
-        body.bericht,   // Bericht
-        "TRUE"      // Goedgekeurd: automatisch goedgekeurd
+        new Date(),   // Timestamp
+        body.naam,    // Naam
+        body.titel,   // Titel
+        body.bericht, // Bericht
+        "TRUE"        // Goedgekeurd
       ]);
     }
   } catch(err) {}
@@ -293,6 +285,16 @@ function handleRequest(e) {
           <strong>Kopieer deze URL.</strong> Je hebt hem nodig in de volgende
           stap.
         </p>
+        <div class="note">
+          ⚠\uefbf�
+          <strong
+            >Heb je het script al eerder gepubliceerd en nu aangepast?</strong
+          >
+          Kies dan <strong>Implementeren → Implementaties beheren</strong> en
+          klik op het potloodicoon om een <em>nieuwe versie</em> te deployen.
+          Een bestaande implementatie bijwerken zonder nieuwe versie pikt het
+          gewijzigde script <strong>niet</strong> op.
+        </div>
       </div>
 
       <!-- STAP 4 -->
