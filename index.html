@@ -1,2387 +1,823 @@
-<!doctype html>
-<html lang="nl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Supportersclub Jelle Naets</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      :root {
-        --bg: #f7f4ef;
-        --bg2: #edeae3;
-        --card: #ffffff;
-        --dark: #1a1a1a;
-        --muted: #6b6560;
-        --orange: #e85d00;
-        --orange-light: #ff7a20;
-        --orange-pale: rgba(232, 93, 0, 0.08);
-        --border: rgba(232, 93, 0, 0.15);
-        --border-n: rgba(0, 0, 0, 0.08);
-        --max-w: 1200px;
-        --pad: clamp(1.5rem, 5vw, 5rem);
-        --nav-bg: rgba(247, 244, 239, 0.96);
-        --nav-logo-c: #1a1a1a;
-        --nav-link-c: #6b6560;
-        --mob-bg: rgba(247, 244, 239, 0.98);
-        --mob-link-c: #1a1a1a;
-        --mob-close-c: #1a1a1a;
-        --ham-c: #1a1a1a;
-      }
-      /* ── DARK MODE ── */
-      body.dark {
-        --bg: #111111;
-        --bg2: #181818;
-        --card: #1e1e1e;
-        --dark: #f0ebe3;
-        --muted: rgba(240, 235, 227, 0.55);
-        --border-n: rgba(255, 255, 255, 0.07);
-        --orange-pale: rgba(232, 93, 0, 0.12);
-        --nav-bg: rgba(17, 17, 17, 0.96);
-        --nav-logo-c: #f0ebe3;
-        --nav-link-c: rgba(240, 235, 227, 0.55);
-        --mob-bg: rgba(17, 17, 17, 0.98);
-        --mob-link-c: #f0ebe3;
-        --mob-close-c: #f0ebe3;
-        --ham-c: #f0ebe3;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        background: var(--bg);
-        color: var(--dark);
-        font-family: "Barlow", sans-serif;
-        font-size: 16px;
-        line-height: 1.65;
-        overflow-x: hidden;
-        transition:
-          background 0.35s,
-          color 0.35s;
-      }
-      .inner {
-        max-width: var(--max-w);
-        margin: auto;
-        padding: 0 var(--pad);
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yari Naets — 3D Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0a0a0a;
+  --white: #f2efe8;
+  --accent: #ff4d1c;
+  --muted: rgba(242,239,232,0.45);
+  --border: rgba(242,239,232,0.10);
+  --border-dark: rgba(0,0,0,0.10);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
-      /* NAV */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 300;
-        background: var(--nav-bg);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border-n);
-        transition: background 0.35s;
-      }
-      .nav-inner {
-        max-width: var(--max-w);
-        margin: auto;
-        padding: 0.9rem var(--pad);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-      }
-      .nav-logo img {
-        height: 36px;
-      }
-      .nav-logo span {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--nav-logo-c);
-        transition: color 0.35s;
-      }
-      .nav-links {
-        display: flex;
-        gap: 1.8rem;
-        list-style: none;
-        align-items: center;
-      }
-      .nav-links a {
-        font-size: 0.71rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--nav-link-c);
-        text-decoration: none;
-        transition: color 0.2s;
-        font-weight: 600;
-      }
-      .nav-links a:hover {
-        color: var(--orange);
-      }
-      .nav-accent {
-        border: 1.5px solid var(--orange) !important;
-        padding: 0.42rem 1.2rem;
-        border-radius: 3px;
-        color: var(--orange) !important;
-        transition:
-          background 0.2s,
-          color 0.2s !important;
-      }
-      .nav-accent:hover {
-        background: var(--orange) !important;
-        color: #fff !important;
-      }
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 4px;
-      }
-      .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: var(--ham-c);
-        transition: background 0.35s;
-      }
-      .mobile-menu {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: var(--mob-bg);
-        z-index: 400;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2.2rem;
-        transition: background 0.35s;
-      }
-      .mobile-menu.open {
-        display: flex;
-      }
-      .mobile-menu a {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 2rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--mob-link-c);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      .mobile-menu a:hover {
-        color: var(--orange);
-      }
-      .mobile-close {
-        position: absolute;
-        top: 1.5rem;
-        right: var(--pad);
-        background: none;
-        border: none;
-        color: var(--mob-close-c);
-        font-size: 2rem;
-        cursor: pointer;
-      }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 3rem;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.96), transparent);
+}
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; color: var(--white); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta { border: 1px solid rgba(242,239,232,0.3) !important; padding: 0.5rem 1.3rem; border-radius: 100px; color: var(--white) !important; transition: background 0.2s, color 0.2s !important; }
+.nav-cta:hover { background: var(--white) !important; color: var(--black) !important; }
 
-      /* THEME TOGGLE — compact, symbol inside knob */
-      .theme-toggle {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-      }
-      .theme-switch {
-        position: relative;
-        width: 44px;
-        height: 24px;
-        flex-shrink: 0;
-      }
-      .theme-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        position: absolute;
-      }
-      .theme-slider {
-        position: absolute;
-        inset: 0;
-        background: #d4cfc7;
-        border-radius: 24px;
-        cursor: pointer;
-        transition: background 0.3s;
-        display: flex;
-        align-items: center;
-      }
-      /* the knob */
-      .theme-slider::before {
-        content: "☀️";
-        position: absolute;
-        left: 3px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #fff;
-        transition: transform 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.65rem;
-        line-height: 18px;
-        text-align: center;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      }
-      .theme-switch input:checked + .theme-slider {
-        background: rgba(232, 93, 0, 0.35);
-      }
-      .theme-switch input:checked + .theme-slider::before {
-        content: "🌙";
-        transform: translate(20px, -50%);
-      }
+/* ── HERO ──
+   Change 1: hero-photo now points to images/hero.jpg (local file).
+   Keep the Unsplash URL as a CSS fallback comment so it still works
+   in browser preview before the local image is added. */
+#home {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 0 3rem 4.5rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 72% 38%, rgba(255,77,28,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 15% 85%, rgba(20,10,60,0.45) 0%, transparent 60%),
+    #0a0a0a;
+}
+/* ★ CHANGE 1 — local hero image */
+.hero-photo {
+  position: absolute; inset: 0;
+  background: url('images/hero.jpg') center/cover no-repeat;
+  opacity: 0.35;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(10,10,10,1)    0%,
+    rgba(10,10,10,0.25) 55%,
+    rgba(10,10,10,0.65) 100%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 960px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid rgba(255,77,28,0.35);
+  padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.8rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 11.5vw, 11rem);
+  line-height: 0.91; letter-spacing: 0.01em;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero-title .accent { color: var(--accent); }
+.hero-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-top: 2.5rem; flex-wrap: wrap; gap: 1.5rem;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-sub { font-size: 0.95rem; font-weight: 300; color: var(--muted); max-width: 420px; line-height: 1.75; }
+.hero-cta { display: flex; gap: 0.8rem; flex-shrink: 0; }
+.btn-primary {
+  display: inline-block; background: var(--accent); color: var(--white);
+  text-decoration: none; font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.85rem 2rem; border-radius: 100px;
+  transition: opacity 0.2s, transform 0.2s; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-block; color: var(--white); text-decoration: none;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.85rem 2rem; border: 1px solid rgba(242,239,232,0.25);
+  border-radius: 100px; transition: border-color 0.2s, transform 0.2s;
+}
+.btn-ghost:hover { border-color: var(--white); transform: translateY(-2px); }
 
-      /* HERO — donker voor impact */
-      #home {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        position: relative;
-        overflow: hidden;
-      }
-      .hero-bg {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            ellipse 60% 55% at 65% 40%,
-            rgba(232, 93, 0, 0.22) 0%,
-            transparent 65%
-          ),
-          #141414;
-      }
-      .hero-photo {
-        position: absolute;
-        inset: 0;
-        background: url("images/hero.jpg") center top/cover no-repeat;
-        opacity: 0.62; /* ← Vervang 'images/hero.jpg' door jouw eigen foto */
-      }
-      @media (max-width: 768px) {
-        .hero-photo {
-          background-image: url("images/hero-mobile.jpg");
-          background-position: center top;
-        }
-      }
-      .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(20, 20, 20, 1) 0%,
-          rgba(20, 20, 20, 0.1) 50%,
-          rgba(20, 20, 20, 0.5) 100%
-        );
-      }
-      .hero-stripe {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: linear-gradient(to bottom, var(--orange), transparent);
-      }
-      .hero-content {
-        position: relative;
-        z-index: 1;
-        padding-bottom: 5rem;
-        max-width: 900px;
-      }
-      /* BADGE */
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        font-size: 0.66rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--orange);
-        border: 1px solid rgba(232, 93, 0, 0.4);
-        padding: 0.38rem 1rem;
-        border-radius: 2px;
-        margin-bottom: 1.4rem;
-        animation: fadeUp 0.7s ease both;
-      }
-      .hero-badge::before {
-        content: "";
-        width: 5px;
-        height: 5px;
-        background: var(--orange);
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-      .hero-title {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 900;
-        font-size: clamp(4rem, 12vw, 10.5rem);
-        line-height: 0.88;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        color: #f5f0e8;
-        animation: fadeUp 0.7s 0.1s ease both;
-      }
-      .hero-title .hl {
-        color: var(--orange);
-      }
-      .hero-title .sub-name {
-        font-weight: 400;
-        font-size: 0.44em;
-        color: rgba(245, 240, 232, 0.55);
-        display: block;
-        letter-spacing: 0.1em;
-        margin-bottom: 0.12em;
-      }
-      .hero-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-top: 2.2rem;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        animation: fadeUp 0.7s 0.2s ease both;
-      }
-      .hero-sub {
-        font-size: 0.95rem;
-        font-weight: 300;
-        color: rgba(245, 240, 232, 0.65);
-        max-width: 440px;
-        line-height: 1.8;
-      }
-      .hero-cta {
-        display: flex;
-        gap: 0.7rem;
-        flex-shrink: 0;
-      }
+/* ── SHARED SECTION SHELL ── */
+/* Change 4: all sections use a max-width inner wrapper for slim side borders */
+.dark-sec { padding: 6rem 0; border-top: 1px solid var(--border); }
+.sec-inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+.section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6.5vw, 6rem); line-height: 0.94; letter-spacing: 0.01em; }
 
-      /* stripe transitie donker → licht */
-      .hero-to-light {
-        height: 5px;
-        background: linear-gradient(
-          to right,
-          var(--orange) 0%,
-          transparent 55%
-        );
-      }
+/* ── ABOUT ── white bg, dark text, max-width inner */
+#about {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border-dark);
+  background: #ffffff;
+  color: #111;
+}
+#about .section-label { color: var(--accent); }
+#about .section-title { color: #111; }
+#about .about-inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
 
-      /* Buttons */
-      .btn {
-        display: inline-block;
-        text-decoration: none;
-        font-size: 0.74rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        padding: 0.88rem 1.9rem;
-        border-radius: 3px;
-        transition: all 0.2s;
-        cursor: pointer;
-        border: none;
-        font-family: "Barlow", sans-serif;
-        font-weight: 600;
-      }
-      .btn-orange {
-        background: var(--orange);
-        color: #fff;
-      }
-      .btn-orange:hover {
-        background: var(--orange-light);
-        transform: translateY(-2px);
-      }
-      .btn-ghost-dark {
-        background: transparent;
-        color: #f5f0e8;
-        border: 1.5px solid rgba(245, 240, 232, 0.3);
-      }
-      .btn-ghost-dark:hover {
-        border-color: var(--orange);
-        color: var(--orange);
-        transform: translateY(-2px);
-      }
-      .btn-ghost {
-        background: transparent;
-        color: var(--dark);
-        border: 1.5px solid var(--border-n);
-      }
-      .btn-ghost:hover {
-        border-color: var(--orange);
-        color: var(--orange);
-        transform: translateY(-2px);
-      }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 4rem; }
+.about-text p { font-size: 1rem; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 1.2rem; }
+.about-text p strong { color: #111; font-weight: 500; }
 
-      /* Sections */
-      .section {
-        padding: 5.5rem 0;
-      }
-      .section + .section {
-        border-top: 1px solid var(--border-n);
-      }
-      .sec-label {
-        font-size: 0.63rem;
-        letter-spacing: 0.26em;
-        text-transform: uppercase;
-        color: var(--orange);
-        margin-bottom: 0.6rem;
-        font-weight: 700;
-      }
-      .sec-title {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-        font-size: clamp(2.2rem, 5vw, 3.6rem);
-        text-transform: uppercase;
-        line-height: 0.95;
-        margin-bottom: 1.5rem;
-        color: var(--dark);
-        transition: color 0.35s;
-      }
-      .sec-title .hl {
-        color: var(--orange);
-      }
+/* 3 overlapping portrait photos + stats */
+/* Change 1: photos 20% larger, less overlap, vertically aligned with text,
+   centred above stats; stats 20% smaller */
+.about-right {
+  display: flex; flex-direction: column; gap: 2rem;
+  /* vertically align with text: no extra top offset needed since
+     about-grid uses align-items: start — the right col starts at same baseline */
+}
 
-      /* Reveal */
-      .reveal {
-        opacity: 0;
-        transform: translateY(22px);
-        transition:
-          opacity 0.6s ease,
-          transform 0.6s ease;
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: none;
-      }
+.about-photos {
+  position: relative;
+  /* height = photo height + small top offset for tilt */
+  height: 262px;
+  /* centre the photo cluster above the stats grid */
+  display: flex; justify-content: center;
+}
+.about-photos img {
+  position: absolute;
+  width: 156px;   /* 130 × 1.2 */
+  height: 228px;  /* 190 × 1.2 */
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  transition: transform 0.3s, z-index 0s;
+}
+/* less overlap: step = ~120px instead of 90px (photos are 156px wide) */
+.about-photos img:nth-child(1) {
+  left: calc(50% - 198px); top: 22px;
+  transform: rotate(-4deg);
+  z-index: 1;
+}
+.about-photos img:nth-child(2) {
+  left: calc(50% - 78px); top: 0;
+  transform: rotate(1deg);
+  z-index: 2;
+}
+.about-photos img:nth-child(3) {
+  left: calc(50% + 42px); top: 20px;
+  transform: rotate(5deg);
+  z-index: 3;
+}
+.about-photos img:hover {
+  transform: rotate(0deg) scale(1.05) !important;
+  z-index: 10;
+}
 
-      /* ACCORDION */
-      .accordion {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .acc-item {
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-        transition: border-color 0.35s;
-      }
-      .acc-trigger {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.2rem 1.6rem;
-        background: var(--card);
-        cursor: pointer;
-        border: none;
-        color: var(--dark);
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 1.08rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        text-align: left;
-        transition:
-          background 0.2s,
-          color 0.35s;
-      }
-      .acc-trigger:hover,
-      .acc-trigger.open {
-        background: var(--orange-pale);
-      }
-      .acc-icon {
-        width: 30px;
-        height: 30px;
-        border: 1.5px solid var(--border-n);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transition:
-          transform 0.3s,
-          background 0.2s;
-        color: var(--orange);
-        font-size: 1.1rem;
-        line-height: 1;
-      }
-      .acc-trigger.open .acc-icon {
-        transform: rotate(45deg);
-        background: var(--orange);
-        color: #fff;
-        border-color: var(--orange);
-      }
-      .acc-body {
-        max-height: 0;
-        overflow: hidden;
-        transition:
-          max-height 0.45s ease,
-          padding 0.3s;
-        background: var(--bg);
-        padding: 0 1.6rem;
-        font-size: 0.94rem;
-        color: var(--muted);
-        line-height: 1.85;
-      }
-      .acc-body.open {
-        max-height: 900px;
-        padding: 1.4rem 1.6rem;
-      }
+/* Stats 20% smaller */
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #e8e4dc; border: 1px solid #e8e4dc; }
+.stat { background: #fff; padding: 1.4rem 1.2rem; }
+.stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 3.05rem; line-height: 1; color: #111; }
+.stat-number .acc { color: var(--accent); }
+.stat-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-top: 0.25rem; }
 
-      /* Papa blok binnen accordion */
-      .papa-acc-wrap {
-        display: flex;
-        gap: 2rem;
-        align-items: flex-start;
-      }
-      .papa-acc-text {
-        flex: 1;
-      }
-      .papa-acc-photo {
-        flex-shrink: 0;
-        width: 170px;
-      }
-      .papa-acc-photo a {
-        display: block;
-      }
-      .papa-acc-photo img {
-        width: 100%;
-        aspect-ratio: 3/4;
-        object-fit: cover;
-        border-radius: 5px;
-        border: 2px solid var(--border-n);
-        transition:
-          border-color 0.2s,
-          transform 0.25s;
-        display: block;
-      }
-      .papa-acc-photo a:hover img {
-        border-color: var(--orange);
-        transform: scale(1.03);
-      }
-      .papa-photo-label {
-        text-align: center;
-        margin-top: 0.5rem;
-        font-size: 0.68rem;
-        color: var(--muted);
-        letter-spacing: 0.07em;
-      }
-      .papa-photo-label span {
-        color: var(--orange);
-        font-weight: 600;
-      }
-      @media (max-width: 600px) {
-        .papa-acc-wrap {
-          flex-direction: column-reverse;
-        }
-        .papa-acc-photo {
-          width: 100%;
-        }
-        .papa-acc-photo img {
-          aspect-ratio: 16/9;
-        }
-      }
+/* ── EXPERTISE ── */
+.expertise-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 4rem;
+}
+.expertise-card { background: var(--black); position: relative; overflow: hidden; cursor: pointer; transition: background 0.3s; }
+.expertise-card:hover { background: #111; }
+.exp-img-wrap { overflow: hidden; position: relative; }
+.exp-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; opacity: 0.72; transition: opacity 0.4s, transform 0.5s; }
+.expertise-card:hover .exp-img { opacity: 1; transform: scale(1.04); }
+.exp-hint {
+  position: absolute; bottom: 0.75rem; right: 0.75rem;
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(10,10,10,0.78); color: var(--white);
+  padding: 0.3rem 0.7rem; border-radius: 100px;
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.expertise-card:hover .exp-hint { opacity: 1; }
+.exp-body { padding: 1.8rem 1.8rem 2.2rem; }
+.exp-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(242,239,232,0.06); line-height: 1; margin-bottom: 0.4rem; }
+.exp-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+.exp-desc { font-size: 0.83rem; font-weight: 300; color: var(--muted); line-height: 1.75; }
+.tools-list { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tool-tag { font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--border); padding: 0.22rem 0.65rem; border-radius: 100px; color: var(--muted); }
 
-      /* RESULTS TABLE */
-      .results-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 2rem;
-        background: var(--card);
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-        transition: background 0.35s;
-      }
-      .results-table th {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 0.68rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--orange);
-        padding: 0.95rem 1.2rem;
-        border-bottom: 2px solid var(--border-n);
-        text-align: left;
-        font-weight: 700;
-        background: var(--bg2);
-        transition: background 0.35s;
-      }
-      .results-table td {
-        padding: 0.9rem 1.2rem;
-        font-size: 0.9rem;
-        color: var(--muted);
-        border-bottom: 1px solid var(--border-n);
-        vertical-align: middle;
-        transition: color 0.35s;
-      }
-      .results-table tr:last-child td {
-        border-bottom: none;
-      }
-      .results-table tr:hover td {
-        background: var(--orange-pale);
-        color: var(--dark);
-      }
-      .result-link {
-        color: var(--orange);
-        text-decoration: none;
-        transition: opacity 0.2s;
-      }
-      .result-link:hover {
-        opacity: 0.75;
-        text-decoration: underline;
-      }
-      .badge-result {
-        display: inline-block;
-        padding: 0.22rem 0.65rem;
-        border-radius: 3px;
-        font-size: 0.73rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-      }
-      .badge-finish {
-        background: rgba(232, 93, 0, 0.1);
-        color: var(--orange);
-        border: 1px solid rgba(232, 93, 0, 0.25);
-      }
+/* ── WORK ── */
+.work-intro { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+.work-aside { font-size: 0.85rem; font-weight: 300; color: var(--muted); max-width: 360px; line-height: 1.7; }
+.work-aside strong { color: var(--white); font-weight: 500; }
 
-      /* AGENDA */
-      .agenda-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1rem;
-        margin-top: 2rem;
-      }
-      .agenda-card {
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        padding: 1.3rem 1.5rem;
-        display: flex;
-        gap: 1.2rem;
-        align-items: flex-start;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-        transition:
-          box-shadow 0.2s,
-          transform 0.2s,
-          border-color 0.2s,
-          background 0.35s;
-      }
-      .agenda-card:hover {
-        box-shadow: 0 6px 20px rgba(232, 93, 0, 0.12);
-        transform: translateY(-3px);
-        border-color: rgba(232, 93, 0, 0.3);
-      }
-      .agenda-date {
-        flex-shrink: 0;
-        width: 54px;
-        text-align: center;
-        background: var(--orange);
-        border-radius: 4px;
-        padding: 0.5rem 0;
-        color: #fff;
-      }
-      .agenda-date .day {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 900;
-        font-size: 1.55rem;
-        line-height: 1;
-      }
-      .agenda-date .month {
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      .agenda-info h4 {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 0.98rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        margin-bottom: 0.25rem;
-        color: var(--dark);
-        transition: color 0.35s;
-      }
-      .agenda-info p {
-        font-size: 0.81rem;
-        color: var(--muted);
-      }
-      .agenda-tag {
-        display: inline-block;
-        font-size: 0.6rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.18rem 0.55rem;
-        border-radius: 2px;
-        margin-top: 0.45rem;
-        background: var(--orange-pale);
-        color: var(--orange);
-        border: 1px solid rgba(232, 93, 0, 0.2);
-        font-weight: 600;
-      }
+.photo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+.photo-strip img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; opacity: 0.75; transition: opacity 0.3s; }
+.photo-strip img:hover { opacity: 1; }
 
-      /* GALLERY TEASER */
-      .gallery-teaser {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 6px;
-        margin-top: 2rem;
-        border-radius: 6px;
-        overflow: hidden;
-      }
-      .gallery-teaser-item {
-        position: relative;
-        aspect-ratio: 1;
-        overflow: hidden;
-        cursor: pointer;
-      }
-      .gallery-teaser-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition:
-          transform 0.4s,
-          filter 0.3s;
-        filter: brightness(0.88);
-      }
-      .gallery-teaser-item:hover img {
-        transform: scale(1.07);
-        filter: brightness(1);
-      }
-      .gallery-teaser-item.last-item::after {
-        content: "Alle 35 foto's →";
-        position: absolute;
-        inset: 0;
-        background: rgba(232, 93, 0, 0.85);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #fff;
-        text-align: center;
-        padding: 1rem;
-      }
+.work-card { background: var(--black); padding: 2.5rem 2rem; }
+.work-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.work-card.featured { grid-row: span 2; }
+.work-tag { display: inline-block; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,77,28,0.12); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 100px; margin-bottom: 1.2rem; }
+.work-name { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.03em; line-height: 1; margin-bottom: 0.9rem; }
+.work-body { font-size: 0.85rem; font-weight: 300; color: var(--muted); line-height: 1.8; }
+.clients-block { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.clients-lbl { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.7rem; }
+.clients-names { font-size: 0.82rem; color: rgba(242,239,232,0.5); line-height: 2; }
+.clients-names strong { color: var(--white); font-weight: 500; }
+.vdv-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; opacity: 0.8; }
 
-      /* GALLERY OVERLAY */
-      .gallery-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 400;
-        background: rgba(18, 18, 18, 0.97);
-        flex-direction: column;
-      }
-      .gallery-overlay.open {
-        display: flex;
-        animation: fadeIn 0.22s ease;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .gal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.1rem 1.8rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        flex-shrink: 0;
-      }
-      .gal-header-title {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-        font-size: 1.1rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #f5f0e8;
-      }
-      .gal-header-title span {
-        color: var(--orange);
-      }
-      .gal-close {
-        background: none;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #f5f0e8;
-        padding: 0.42rem 1rem;
-        border-radius: 3px;
-        cursor: pointer;
-        font-family: "Barlow", sans-serif;
-        font-size: 0.74rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        font-weight: 600;
-        transition: background 0.2s;
-      }
-      .gal-close:hover {
-        background: var(--orange);
-        border-color: var(--orange);
-      }
-      .gal-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1.5rem;
-        position: relative;
-      }
-      /* scroll-to-top inside gallery */
-      .gal-totop {
-        position: sticky;
-        bottom: 1.2rem;
-        float: right;
-        width: 38px;
-        height: 38px;
-        background: var(--orange);
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        font-weight: 700;
-        opacity: 0;
-        transition: opacity 0.3s;
-        pointer-events: none;
-        z-index: 10;
-        box-shadow: 0 3px 10px rgba(232, 93, 0, 0.4);
-        margin-top: -38px; /* keeps it from pushing layout */
-      }
-      .gal-totop.visible {
-        opacity: 1;
-        pointer-events: all;
-      }
-      .gal-grid {
-        max-width: 900px;
-        margin: 0 auto;
-        columns: 3;
-        column-gap: 8px;
-      }
-      @media (max-width: 700px) {
-        .gal-grid {
-          columns: 2;
-        }
-      }
-      .gal-grid img {
-        width: 100%;
-        display: block;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-bottom: 8px;
-        transition:
-          transform 0.3s,
-          filter 0.3s;
-        filter: brightness(0.88);
-        break-inside: avoid;
-      }
-      .gal-grid img:hover {
-        transform: scale(1.03);
-        filter: brightness(1);
-        position: relative;
-        z-index: 1;
-      }
+/* ── LIGHTBOX — CHANGE 3 ──
+   Masonry-style unequal sizes + click-to-enlarge single photo */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(5,5,5,0.97);
+  flex-direction: column; align-items: center;
+  padding: 2rem; overflow-y: auto;
+}
+.lightbox.open { display: flex; }
+.lb-head {
+  width: 100%; max-width: 1100px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 2rem; flex-shrink: 0;
+}
+.lb-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; }
+.lb-close {
+  background: none; border: 1px solid var(--border); color: var(--white);
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer;
+  transition: background 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.lb-close:hover { background: rgba(242,239,232,0.08); }
 
-      /* ZOOM */
-      .zoom-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 600;
-        background: rgba(0, 0, 0, 0.94);
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-      .zoom-overlay.open {
-        display: flex;
-      }
-      .zoom-overlay > img {
-        max-width: 90vw;
-        max-height: 82vh;
-        object-fit: contain;
-        border-radius: 3px;
-        transition: opacity 0.13s;
-      }
-      .zoom-close {
-        position: absolute;
-        top: 1.2rem;
-        right: 1.5rem;
-        background: none;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        color: #fff;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-      }
-      .zoom-close:hover {
-        background: var(--orange);
-        border-color: var(--orange);
-      }
-      .zoom-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(20, 20, 20, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        color: #fff;
-        width: 46px;
-        height: 46px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
-        transition: background 0.2s;
-      }
-      .zoom-nav:hover {
-        background: var(--orange);
-        border-color: var(--orange);
-      }
-      #zoom-prev {
-        left: 1.2rem;
-      }
-      #zoom-next {
-        right: 1.2rem;
-      }
-      .zoom-counter {
-        position: absolute;
-        bottom: 1.2rem;
-        font-size: 0.72rem;
-        letter-spacing: 0.15em;
-        color: rgba(255, 255, 255, 0.5);
-      }
+/* ★ CHANGE 3a — varied-size masonry grid */
+.lb-grid {
+  width: 100%; max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+  gap: 6px;
+}
+/* Large items span 2 rows */
+.lb-grid img:nth-child(1),
+.lb-grid img:nth-child(4) { grid-row: span 2; }
 
-      /* TESTIMONIALS */
-      /* ── TESTIMONIALS LAYOUT ── */
-      .t-layout {
-        display: grid;
-        grid-template-columns: 1fr 260px;
-        gap: 1.5rem;
-        margin-top: 2rem;
-        align-items: start;
-      }
-      @media (max-width: 800px) {
-        .t-layout {
-          grid-template-columns: 1fr;
-        }
-      }
+.lb-grid img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  border-radius: 3px; cursor: zoom-in;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.lb-grid img:hover { opacity: 0.82; transform: scale(1.01); }
 
-      .testimonials-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
-      @media (max-width: 560px) {
-        .testimonials-grid {
-          grid-template-columns: 1fr;
-        }
-      }
+.lb-caption {
+  width: 100%; max-width: 1100px;
+  font-size: 0.85rem; font-weight: 300; color: var(--muted);
+  line-height: 1.75; margin-top: 2rem; align-self: flex-start;
+}
 
-      .testimonial-card {
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        padding: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-        transition:
-          background 0.35s,
-          border-color 0.35s;
-      }
-      .testimonial-card::before {
-        content: '"';
-        position: absolute;
-        top: -0.8rem;
-        left: 1rem;
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 6rem;
-        color: rgba(232, 93, 0, 0.08);
-        line-height: 1;
-        font-weight: 900;
-        pointer-events: none;
-      }
-      .testimonial-text {
-        font-size: 0.9rem;
-        line-height: 1.85;
-        color: var(--muted);
-        margin-bottom: 0.9rem;
-        position: relative;
-      }
-      .testimonial-name {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 0.82rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--orange);
-      }
+/* ★ CHANGE 3b — single-photo zoom overlay (inside lightbox) */
+.lb-zoom-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1100;
+  background: rgba(0,0,0,0.92);
+  align-items: center; justify-content: center; cursor: zoom-out;
+}
+.lb-zoom-overlay.open { display: flex; }
+.lb-zoom-overlay img {
+  max-width: 92vw; max-height: 90vh;
+  object-fit: contain; border-radius: 4px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+}
 
-      /* loading / error state */
-      .t-loading {
-        grid-column: 1/-1;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.88rem;
-        padding: 2rem 0;
-      }
+/* ── WORKFLOW — light section ── */
+.wf-section {
+  padding: 6rem 0;
+  background: #f0ece4;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.wf-inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+.wf-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: #999; margin-bottom: 0.9rem; }
+.wf-main-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6.5vw, 6rem); line-height: 0.94; color: #111; margin-bottom: 4rem; }
+.wf-steps { display: flex; flex-direction: column; }
+.wf-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  align-items: start; padding: 3.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.wf-row:last-child { border-bottom: none; }
+.wf-big { font-family: 'Bebas Neue', sans-serif; font-size: 8rem; line-height: 0.8; color: rgba(0,0,0,0.06); margin-bottom: -0.5rem; }
+.wf-step-word { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; color: #111; text-transform: uppercase; display: block; margin-bottom: 0.4rem; }
+.wf-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3.5vw, 3.2rem); letter-spacing: 0.04em; color: #111; line-height: 1; }
+.wf-desc { font-size: 0.95rem; font-weight: 300; color: #555; line-height: 1.85; padding-top: 0.5rem; }
 
-      /* Archive panel */
-      .t-archive {
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-        transition: background 0.35s;
-        display: none;
-      }
-      .t-archive.visible {
-        display: block;
-      }
-      .t-archive-header {
-        padding: 0.85rem 1.1rem;
-        border-bottom: 1px solid var(--border-n);
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 0.78rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--orange);
-      }
-      .t-archive-list {
-        max-height: 340px;
-        overflow-y: auto;
-        padding: 0.3rem 0;
-      }
-      .t-archive-list::-webkit-scrollbar {
-        width: 4px;
-      }
-      .t-archive-list::-webkit-scrollbar-thumb {
-        background: rgba(232, 93, 0, 0.3);
-        border-radius: 2px;
-      }
-      .t-archive-item {
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-        padding: 0.65rem 1.1rem;
-        cursor: pointer;
-        transition: background 0.15s;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
-        border-bottom: 1px solid var(--border-n);
-      }
-      .t-archive-item:last-child {
-        border-bottom: none;
-      }
-      .t-archive-item:hover {
-        background: var(--orange-pale);
-      }
-      .t-archive-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--orange);
-        flex-shrink: 0;
-        opacity: 0.45;
-      }
-      .t-archive-title {
-        font-size: 0.82rem;
-        color: var(--muted);
-        line-height: 1.3;
-        transition: color 0.15s;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .t-archive-item:hover .t-archive-title {
-        color: var(--dark);
-      }
+/* Change 2: thicker, modern arrows */
+.wf-arrow-wrap { display: flex; margin-top: 2rem; }
+.wf-arrow-wrap.end { justify-content: flex-end; }
 
-      /* Popup overlay */
-      .t-popup {
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 500;
-        background: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-        backdrop-filter: blur(3px);
-      }
-      .t-popup.open {
-        display: flex;
-        animation: fadeIn 0.2s ease;
-      }
-      .t-popup-card {
-        background: var(--card);
-        border-radius: 10px;
-        padding: 2.2rem 2rem;
-        max-width: 480px;
-        width: 100%;
-        position: relative;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        border: 1px solid var(--border-n);
-        animation: popUp 0.22s ease;
-      }
-      @keyframes popUp {
-        from {
-          opacity: 0;
-          transform: scale(0.93);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-      .t-popup-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: none;
-        border: 1px solid var(--border-n);
-        color: var(--muted);
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        transition:
-          background 0.2s,
-          color 0.2s;
-      }
-      .t-popup-close:hover {
-        background: var(--orange);
-        color: #fff;
-        border-color: var(--orange);
-      }
-      .t-popup-quote {
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: 4rem;
-        color: rgba(232, 93, 0, 0.12);
-        line-height: 0.8;
-        margin-bottom: 0.5rem;
-        font-weight: 900;
-      }
-      .t-popup-text {
-        font-size: 0.95rem;
-        line-height: 1.9;
-        color: var(--muted);
-        margin-bottom: 1.2rem;
-      }
-      .t-popup-name {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 0.85rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--orange);
-      }
-      .t-form {
-        margin-top: 2.5rem;
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        padding: 2rem;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-        transition: background 0.35s;
-      }
-      .t-form h3 {
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 700;
-        font-size: 1.05rem;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        margin-bottom: 1.2rem;
-        color: var(--dark);
-      }
-      .t-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.8rem;
-        margin-bottom: 0.8rem;
-      }
-      .t-row.full {
-        grid-template-columns: 1fr;
-      }
-      .t-field {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-      }
-      .t-field label {
-        font-size: 0.66rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        font-weight: 600;
-      }
-      .t-field input,
-      .t-field textarea {
-        background: var(--bg);
-        border: 1px solid var(--border-n);
-        border-radius: 4px;
-        padding: 0.72rem 1rem;
-        color: var(--dark);
-        font-family: "Barlow", sans-serif;
-        font-size: 0.9rem;
-        transition:
-          border-color 0.2s,
-          background 0.35s,
-          color 0.35s;
-        resize: none;
-      }
-      .t-field input:focus,
-      .t-field textarea:focus {
-        outline: none;
-        border-color: var(--orange);
-      }
-      .t-field textarea {
-        min-height: 105px;
-      }
-      #t-success {
-        display: none;
-        color: var(--orange);
-        font-size: 0.88rem;
-        margin-top: 0.75rem;
-      }
+/* ── CONTACT ── */
+/* Change 3: right column aligns to bottom-right on wide screens */
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  align-items: end;   /* both cols bottom-aligned */
+}
+.contact-form-col {
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.contact-form-col .form-success,
+.contact-form-col .contact-form { width: 100%; }
+.contact-tagline { font-size: 1rem; font-weight: 300; color: var(--muted); line-height: 1.75; margin-top: 1.5rem; margin-bottom: 2.5rem; }
+.contact-info { display: flex; flex-direction: column; gap: 1rem; }
+.ci { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
+.ci-icon { width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+.ci a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+.ci a:hover { color: var(--accent); }
+.contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fg { display: flex; flex-direction: column; gap: 0.4rem; }
+.fg label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.fg input, .fg textarea, .fg select {
+  background: rgba(242,239,232,0.05); border: 1px solid var(--border);
+  color: var(--white); font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: 4px;
+  outline: none; transition: border-color 0.2s; resize: none;
+}
+.fg select option { background: #1a1a1a; }
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: rgba(255,77,28,0.5); }
+.form-foot { display: flex; align-items: center; gap: 1.2rem; margin-top: 0.3rem; flex-wrap: wrap; }
+.form-note { font-size: 0.75rem; color: var(--muted); }
+.form-success { display: none; background: rgba(255,77,28,0.08); border: 1px solid rgba(255,77,28,0.25); border-radius: 4px; padding: 1rem 1.2rem; font-size: 0.88rem; color: var(--accent); }
 
-      /* CONTACT */
-      .contact-wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: start;
-      }
-      .contact-info p {
-        color: var(--muted);
-        font-size: 0.94rem;
-        line-height: 1.85;
-        margin-bottom: 2rem;
-      }
-      .contact-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.7rem;
-      }
-      .c-link {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        color: var(--dark);
-        text-decoration: none;
-        padding: 1rem 1.2rem;
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 6px;
-        transition:
-          border-color 0.2s,
-          transform 0.2s,
-          background 0.35s,
-          color 0.35s;
-        font-size: 0.88rem;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-      }
-      .c-link:hover {
-        border-color: var(--orange);
-        transform: translateX(4px);
-        color: var(--orange);
-      }
-      .c-link .icon {
-        width: 34px;
-        height: 34px;
-        background: var(--orange-pale);
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      .c-form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      .c-form input,
-      .c-form textarea {
-        background: var(--card);
-        border: 1px solid var(--border-n);
-        border-radius: 4px;
-        padding: 0.82rem 1rem;
-        color: var(--dark);
-        font-family: "Barlow", sans-serif;
-        font-size: 0.9rem;
-        transition:
-          border-color 0.2s,
-          background 0.35s,
-          color 0.35s;
-        resize: none;
-      }
-      .c-form input:focus,
-      .c-form textarea:focus {
-        outline: none;
-        border-color: var(--orange);
-      }
-      .c-form textarea {
-        min-height: 115px;
-      }
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--muted); flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--white); text-decoration: none; }
+.footer-links { display: flex; gap: 1.8rem; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white); }
 
-      /* FOOTER */
-      footer {
-        padding: 2rem 0;
-        border-top: 1px solid var(--border-n);
-        background: var(--bg2);
-        transition: background 0.35s;
-      }
-      .foot-inner {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      .foot-left {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-      }
-      .foot-left img {
-        height: 28px;
-        opacity: 0.7;
-      }
-      .foot-copy {
-        font-size: 0.78rem;
-        color: var(--muted);
-      }
-      .foot-papa {
-        color: var(--orange);
-        text-decoration: none;
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        border: 1px solid rgba(232, 93, 0, 0.35);
-        padding: 0.38rem 0.9rem;
-        border-radius: 3px;
-        transition: background 0.2s;
-        font-weight: 600;
-      }
-      .foot-papa:hover {
-        background: rgba(232, 93, 0, 0.1);
-      }
+/* ── SCROLL TOP ── */
+#scroll-top {
+  position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px;
+  background: var(--accent); border: none; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(12px); transition: opacity 0.3s, transform 0.3s; z-index: 99;
+}
+#scroll-top.visible { opacity: 1; transform: translateY(0); }
+#scroll-top:hover { background: #e03a0a; }
+#scroll-top svg { width: 18px; height: 18px; stroke: white; fill: none; }
 
-      /* SCROLL TOP */
-      #scroll-top {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        z-index: 200;
-        width: 42px;
-        height: 42px;
-        background: var(--orange);
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1rem;
-        font-weight: 700;
-        opacity: 0;
-        transition:
-          opacity 0.3s,
-          transform 0.2s;
-        pointer-events: none;
-        box-shadow: 0 4px 12px rgba(232, 93, 0, 0.35);
-      }
-      #scroll-top.visible {
-        opacity: 1;
-        pointer-events: all;
-      }
-      #scroll-top:hover {
-        transform: translateY(-3px);
-      }
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
 
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(28px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
+/* ── MOBILE ── */
+@media (max-width: 860px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .dark-sec { padding: 4rem 0; }
+  .sec-inner { padding: 0 1.5rem; }
+  #about { padding: 4rem 0; }
+  #about .about-inner { padding: 0 1.5rem; }
+  .wf-section { padding: 4rem 0; }
+  .wf-inner { padding: 0 1.5rem; }
+  #home { padding: 0 1.5rem 3rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-        }
-        .hamburger {
-          display: flex;
-        }
-        .contact-wrap {
-          grid-template-columns: 1fr;
-          gap: 2.5rem;
-        }
-        .t-row {
-          grid-template-columns: 1fr;
-        }
-        .hero-bottom {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .gallery-teaser {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- NAV -->
-    <nav>
-      <div class="nav-inner">
-        <a href="#home" class="nav-logo">
-          <img
-            src="images/logo.png"
-            alt="NJ"
-            onerror="this.style.display = 'none'"
-          />
-          <span>SC Jelle Naets</span>
-        </a>
-        <ul class="nav-links">
-          <li><a href="#over">Over Jelle</a></li>
-          <li><a href="#resultaten">Resultaten</a></li>
-          <li><a href="#agenda">Agenda</a></li>
-          <li><a href="#galerij">Galerij</a></li>
-          <li><a href="#contact" class="nav-accent">Contact</a></li>
-        </ul>
-        <div style="display: flex; align-items: center; gap: 1rem">
-          <div class="theme-toggle" title="Wissel licht/donker">
-            <label class="theme-switch">
-              <input
-                type="checkbox"
-                id="theme-chk"
-                onchange="toggleTheme(this)"
-              />
-              <span class="theme-slider"></span>
-            </label>
-          </div>
-          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
+  /* about photos on mobile */
+  .about-photos { height: 190px; }
+  .about-photos img { width: 120px; height: 174px; }
+  .about-photos img:nth-child(1) { left: calc(50% - 152px); }
+  .about-photos img:nth-child(2) { left: calc(50% - 60px); }
+  .about-photos img:nth-child(3) { left: calc(50% + 32px); }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+  .contact-form-col { align-items: flex-start; }
+
+  /* contact left text centred on narrow screens */
+  .contact-left-text { text-align: center; }
+  .contact-left-text .ci { justify-content: center; }
+  .contact-left-text .contact-tagline { margin-left: auto; margin-right: auto; }
+
+  .work-grid { grid-template-columns: 1fr; }
+  .work-card.featured { grid-row: span 1; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .photo-strip { grid-template-columns: repeat(2, 1fr); }
+  .lb-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+  .lb-grid img:nth-child(1), .lb-grid img:nth-child(4) { grid-row: span 2; }
+  .form-row { grid-template-columns: 1fr; }
+  .wf-row { grid-template-columns: 1fr; gap: 1.5rem; }
+  .wf-row.mirror { direction: ltr; }
+  footer { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">YARI NAETS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#workflow">Process</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<!-- ★ CHANGE 1: replace images/hero.jpg with your own photo -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-photo"></div><!-- src set via CSS: images/hero.jpg -->
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">3D Artist &amp; Visual Designer — Belgium</div>
+    <h1 class="hero-title">PERCEIVED<br><span class="accent">REALM</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">Custom 3D renders for artists, events and brands that want to stand out and create a feeling people remember.</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-primary">View work</a>
+        <a href="#contact" class="btn-ghost">Let's talk</a>
       </div>
-    </nav>
+    </div>
+  </div>
+</section>
 
-    <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobile-menu">
-      <button class="mobile-close" onclick="toggleMenu()">✕</button>
-      <a href="#over" onclick="toggleMenu()">Over Jelle</a>
-      <a href="#resultaten" onclick="toggleMenu()">Resultaten</a>
-      <a href="#agenda" onclick="toggleMenu()">Agenda</a>
-      <a href="#galerij" onclick="toggleMenu()">Galerij</a>
-      <a href="#contact" onclick="toggleMenu()">Contact</a>
-      <a href="papa.html" style="color: var(--orange)">Voor Papa ♥</a>
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="about-inner">
+  <div class="section-label">Who I am</div>
+  <h2 class="section-title">HI,<br>I'M YARI</h2>
+  <div class="about-grid">
+
+    <div class="about-text reveal">
+      <p>A <strong>3D artist</strong> inspired by nightlife, fellow artists and visual experiences. I've always been fascinated by the way a single visual can capture a crowd.</p>
+      <p>The power to grab an audience's attention, to define a moment or to shape an experience — that's why I love 3D.</p>
+      <p>I help artists, events and brands stand out through <strong>custom 3D renders</strong> which speak more than words. I'm convinced it's not just about making things look good, but about creating a feeling people remember — about translating an identity into visuals that connect with people.</p>
     </div>
 
-    <!-- HERO -->
-    <section id="home">
-      <div class="hero-bg"></div>
-      <div class="hero-photo"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-stripe"></div>
-      <div class="inner hero-content">
-        <div class="hero-badge">Officiële Supportersclub</div>
-        <h1 class="hero-title">
-          <span class="sub-name">Supportersclub</span>
-          Jelle <span class="hl">Naets</span>
-        </h1>
-        <div class="hero-bottom">
-          <p class="hero-sub">
-            Welkom bij de officiële supportersclub van mijzelf — triatleet,
-            gewone man die tracht te bewijzen dat grenzen er zijn om verlegd te
-            worden. Volg mijn reis en word deel van mijn verhaal.
-          </p>
-          <div class="hero-cta">
-            <a href="#over" class="btn btn-orange">Ontdek meer</a>
-            <a href="#galerij" class="btn btn-ghost-dark">Galerij</a>
-          </div>
-        </div>
+    <div class="about-right reveal">
+      <!-- ★ Replace with images/about-1.jpg, about-2.jpg, about-3.jpg -->
+      <div class="about-photos">
+        <img src="images/about-1.jpg" alt="Yari at work" onerror="this.style.background='#ddd';this.style.opacity='0.4'">
+        <img src="images/about-2.jpg" alt="Yari 3D render" onerror="this.style.background='#bbb';this.style.opacity='0.4'">
+        <img src="images/about-3.jpg" alt="Yari event" onerror="this.style.background='#ccc';this.style.opacity='0.4'">
       </div>
-    </section>
-
-    <div class="hero-to-light"></div>
-
-    <!-- OVER -->
-    <section class="section" id="over">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Over mijzelf</p>
-          <h2 class="sec-title">Wie is <span class="hl">Jelle Naets</span>?</h2>
-        </div>
-        <div class="accordion reveal">
-          <div class="acc-item">
-            <button class="acc-trigger" onclick="toggleAcc(this)">
-              <span>Wie ben ik &amp; waarom een supportersclub?</span>
-              <span class="acc-icon">+</span>
-            </button>
-            <div class="acc-body">
-              <p>
-                Ik ben Jelle Naets, een gepassioneerde triatleet uit België.
-                Zwemmen, fietsen en lopen — ik tracht het allemaal te doen met
-                een glimlach. Ik combineer een druk leven met een toewijding aan
-                de sport die bewondering afdwingt. Ik rijd op een Trek Speed
-                Concept in mat zwart met fluo oranje accenten — stijl én
-                prestatie in één.
-              </p>
-              <br />
-              <p>
-                Geboren in 1984 en gedurende mijn hele jeugd in Itegem
-                opgegroeid. Als jonge kerel was Chiro mijn toeverlaat. Ik heb er
-                vele toffe momenten mogen beleven en een ware vriendengroep aan
-                overgehouden. later een geweldige vrouw leren kennen en
-                gesetteld te Wiekevorst met ondertussen 2 kinderen. In 2017 ben
-                ik van job veranderd en heb ik mij aangesloten bij een
-                triatlonclub. Langzaam is dit uitgegroeid tot een echte passie.
-                Een laatbloeier in de sport maar zo lang mogelijk blijven gaan
-                is mijn doel.
-              </p>
-              <br />
-              <p>
-                Een atleet is zo sterk als het netwerk dat hem draagt. Deze
-                supportersclub is opgericht om mij te omringen met mensen die in
-                mij geloven — op wedstrijddagen, maar ook in de vroege
-                trainingsochten en de zware herstelweken. Samen vormen jullie de
-                wind in mijn rug. Welkom in het team!
-              </p>
-            </div>
-          </div>
-
-          <div class="acc-item">
-            <button class="acc-trigger" onclick="toggleAcc(this)">
-              <span>Mijn papa ♥</span>
-              <span class="acc-icon">+</span>
-            </button>
-            <div class="acc-body">
-              <div class="papa-acc-wrap">
-                <div class="papa-acc-text">
-                  <p>
-                    Bij elke race draag ik mijn vader mee in mijn hart. Hij was
-                    mijn grootste fan, mijn rots en mijn inspiratie. Zijn
-                    aanmoedigingen (in de sport maar ook daarnaast) klinken in
-                    mijn hoofd bij elke stap, elke slag in het water en elke
-                    omwenteling van de pedalen.
-                  </p>
-                  <br />
-                  <p>
-                    Hij heeft mij geleerd om nooit op te geven. Om, ook als het
-                    pijn doet, door te blijven gaan. Als ik mijzelf overtref is
-                    dat voor hem — want hij is de drijvende wilskracht meer dan
-                    wie dan ook.
-                  </p>
-                  <br />
-                  <p>
-                    <a
-                      href="papa.html"
-                      style="
-                        color: var(--orange);
-                        font-weight: 600;
-                        text-decoration: none;
-                      "
-                      >→ Bezoek de spagina voor mijn papa</a
-                    >
-                  </p>
-                </div>
-                <div class="papa-acc-photo">
-                  <a href="papa.html" title="Bekijk de galerij van papa">
-                    <img
-                      src="images/papa-galerij/foto-1.jpg"
-                      alt="Papa"
-                      onerror="
-                        this.closest('.papa-acc-photo').style.display = 'none'
-                      "
-                    />
-                  </a>
-                  <p class="papa-photo-label">
-                    <span>Klik</span> voor de galerij ♥
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- RESULTATEN -->
-    <section class="section" id="resultaten">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Palmares</p>
-          <h2 class="sec-title">Behaalde <span class="hl">Resultaten</span></h2>
-        </div>
-        <div class="reveal" style="overflow-x: auto">
-          <table class="results-table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Datum</th>
-                <th>Event</th>
-                <th>Resultaat</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2</td>
-                <td>04 mei 2024</td>
-                <td>BK Aquabike Viersel (Masters A)</td>
-                <td>
-                  <a
-                    href="http://results.b-nys.com/indiv?event=2524&pid=731"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish"
-                      >bib — #731</span
-                    ></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>15 jun 2024</td>
-                <td>T100 Willebroek (Masters A)</td>
-                <td>
-                  <a
-                    href="http://results.b-nys.com/indiv?event=2597&pid=42"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish">Bib — #42</span></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>14 sep 2024</td>
-                <td><strong>Challenge Almere-Amsterdam (AG M40-45)</strong></td>
-                <td>
-                  <a
-                    href="https://sporthive.com/events/s/7237122440399159296/race/7237122444694127104/bib/747"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish"
-                      >Bib — #747</span
-                    ></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>04 mei 2025</td>
-                <td>BK Aquabike Viersel</td>
-                <td>
-                  <a
-                    href="http://results.b-nys.com/indiv?event=2824&pid=42"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish">Bib — #42</span></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>14 jun 2025</td>
-                <td>T100 Willebroek (Masters A)</td>
-                <td>
-                  <a
-                    href="http://results.b-nys.com/indiv?event=2902&pid=76"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish">Bib — #76</span></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>19</td>
-                <td>22 mar 2026</td>
-                <td>Grand Raid Nisramont</td>
-                <td>
-                  <a
-                    href="https://my.raceresult.com/387565/results#1_CF1223"
-                    target="_blank"
-                    class="result-link"
-                    ><span class="badge-result badge-finish">Bib — #23</span></a
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p
-          style="
-            font-size: 0.76rem;
-            color: var(--muted);
-            margin-top: 0.9rem;
-            font-style: italic;
-          "
-        >
-          Klik op een resultaat voor de officiële wedstrijdpagina. voeg
-          resultaten toe door geheel tussen tr te copiëren en aan te passen.
-        </p>
-      </div>
-    </section>
-
-    <!-- AGENDA -->
-    <section class="section" id="agenda">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Wedstrijdkalender</p>
-          <h2 class="sec-title">Komende <span class="hl">Wedstrijden</span></h2>
-        </div>
-        <div class="agenda-grid">
-          <div class="agenda-card reveal">
-            <div class="agenda-date">
-              <div class="day">07</div>
-              <div class="month">Mei</div>
-            </div>
-            <div class="agenda-info">
-              <h4>— Wielrwedstrijd Zolder —</h4>
-              <p>Locatie · Afstand</p>
-              <span class="agenda-tag">Wielrennen</span>
-            </div>
-          </div>
-          <div class="agenda-card reveal">
-            <div class="agenda-date">
-              <div class="day">25</div>
-              <div class="month">Mei</div>
-            </div>
-            <div class="agenda-info">
-              <h4>— BK pol —</h4>
-              <p>Locatie · Afstand</p>
-              <span class="agenda-tag">Wielrennen</span>
-            </div>
-          </div>
-          <div class="agenda-card reveal">
-            <div class="agenda-date">
-              <div class="day">24</div>
-              <div class="month">Jun</div>
-            </div>
-            <div class="agenda-info">
-              <h4>— VWV Wiekevorst —</h4>
-              <p>Locatie · Afstand</p>
-              <span class="agenda-tag">Wielrennen</span>
-            </div>
-          </div>
-        </div>
-        <p
-          style="
-            font-size: 0.76rem;
-            color: var(--muted);
-            margin-top: 1.2rem;
-            font-style: italic;
-          "
-        >
-          Agenda wordt bijgewerkt naargelang inschrijvingen worden bevestigd.
-        </p>
-      </div>
-    </section>
-
-    <!-- GALERIJ -->
-    <section class="section" id="galerij">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Foto's</p>
-          <h2 class="sec-title">Galerij <span class="hl">Jelle</span></h2>
-          <p
-            style="
-              color: var(--muted);
-              font-size: 0.9rem;
-              margin-top: 0.4rem;
-              margin-bottom: 0;
-            "
-          >
-            Een preview van 4 foto's. Klik op de preview of de knop om alle 35
-            foto's te bekijken.
-          </p>
-        </div>
-        <div class="gallery-teaser reveal" id="gallery-teaser"></div>
-        <div style="margin-top: 1.5rem" class="reveal">
-          <button class="btn btn-orange" onclick="openGallery()">
-            📷 &nbsp;Bekijk alle 35 foto's
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="section" id="testimonials">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Supporters aan het woord</p>
-          <h2 class="sec-title">
-            Wat zeggen ze over <span class="hl">Jelle</span>?
-          </h2>
-        </div>
-
-        <div class="t-layout reveal">
-          <!-- Linker kolom: 4 meest recente kaarten -->
-          <div class="testimonials-grid" id="testimonials-container">
-            <div class="t-loading">Testimonials laden…</div>
-          </div>
-          <!-- Rechter kolom: archief oudere berichten -->
-          <div class="t-archive" id="t-archive">
-            <div class="t-archive-header">Eerder ontvangen</div>
-            <div class="t-archive-list" id="t-archive-list"></div>
-          </div>
-        </div>
-
-        <!-- Popup voor archief-items -->
-        <div class="t-popup" id="t-popup">
-          <div class="t-popup-card">
-            <button class="t-popup-close" onclick="closePopup()">✕</button>
-            <div class="t-popup-quote">"</div>
-            <p class="t-popup-text" id="t-popup-text"></p>
-            <div class="t-popup-name" id="t-popup-name"></div>
-          </div>
-        </div>
-
-        <div class="t-form reveal" style="margin-top: 2.5rem">
-          <h3>Laat jouw boodschap achter 💬</h3>
-          <div class="t-row">
-            <div class="t-field">
-              <label>Jouw naam</label>
-              <input type="text" id="t-name" placeholder="Naam" />
-            </div>
-            <div class="t-field">
-              <label>Korte titel</label>
-              <input
-                type="text"
-                id="t-short"
-                placeholder="bv. 'Aanwezig bij de finish'"
-              />
-            </div>
-          </div>
-          <div class="t-row full">
-            <div class="t-field">
-              <label>Bericht</label>
-              <textarea
-                id="t-text"
-                placeholder="Schrijf hier jouw bericht..."
-              ></textarea>
-            </div>
-          </div>
-          <button class="btn btn-orange" onclick="submitTestimonial()">
-            Verstuur bericht
-          </button>
-          <p id="t-success">✓ Bedankt! Jouw bericht werd toegevoegd.</p>
-          <p
-            id="t-error"
-            style="
-              display: none;
-              color: #c0392b;
-              font-size: 0.88rem;
-              margin-top: 0.75rem;
-            "
-          >
-            ⚠ Er ging iets mis. Probeer later opnieuw.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="inner">
-        <div class="reveal">
-          <p class="sec-label">Neem contact op</p>
-          <h2 class="sec-title">Blijf <span class="hl">Verbonden</span></h2>
-        </div>
-        <div class="contact-wrap">
-          <div class="contact-info reveal">
-            <p>
-              Wil je meer weten over de supportersclub, aanwezig zijn op een
-              wedstrijd, of gewoon een bericht sturen? Neem gerust contact op!
-            </p>
-            <div class="contact-links">
-              <a
-                href="https://www.instagram.com/jelle_naets"
-                target="_blank"
-                class="c-link"
-              >
-                <span class="icon">📸</span
-                ><span>@jelle_naets op Instagram</span>
-              </a>
-              <a href="papa.html" class="c-link">
-                <span class="icon">♥</span><span>Herdenkingspagina Papa</span>
-              </a>
-            </div>
-          </div>
-          <div class="reveal">
-            <form class="c-form" onsubmit="submitContact(event)">
-              <input type="text" placeholder="Jouw naam" required />
-              <input type="email" placeholder="E-mailadres" required />
-              <textarea placeholder="Jouw bericht..." required></textarea>
-              <button type="submit" class="btn btn-orange" style="width: 100%">
-                Verstuur
-              </button>
-              <p
-                id="contact-success"
-                style="display: none; color: var(--orange); font-size: 0.85rem"
-              >
-                ✓ Bericht ontvangen! We nemen spoedig contact op.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="inner foot-inner">
-        <div class="foot-left">
-          <img
-            src="images/logo.png"
-            alt="NJ"
-            onerror="this.style.display = 'none'"
-          />
-          <p class="foot-copy">
-            © 2025 Supportersclub Jelle Naets · Met 🧡 gemaakt voor de
-            supporters.
-          </p>
-        </div>
-        <a href="papa.html" class="foot-papa">Voor Papa ♥</a>
-      </div>
-    </footer>
-
-    <button
-      id="scroll-top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-      aria-label="Naar boven"
-    >
-      ↑
-    </button>
-
-    <!-- GALLERY OVERLAY -->
-    <div class="gallery-overlay" id="gallery-overlay">
-      <div class="gal-header">
-        <div class="gal-header-title">
-          Galerij <span>Jelle Naets</span> · 35 foto's
-        </div>
-        <button class="gal-close" onclick="closeGallery()">
-          ✕ &nbsp;Sluiten
-        </button>
-      </div>
-      <div class="gal-body" id="jelle-gal-body">
-        <div class="gal-grid" id="jelle-gallery-grid"></div>
-        <button
-          class="gal-totop"
-          id="gal-totop"
-          onclick="galScrollTop()"
-          aria-label="Naar boven"
-        >
-          ↑
-        </button>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-number">5<span class="acc">+</span></div><div class="stat-label">Years experience</div></div>
+        <div class="stat"><div class="stat-number">20<span class="acc">K</span></div><div class="stat-label">Community fans</div></div>
+        <div class="stat"><div class="stat-number">2<span class="acc">K+</span></div><div class="stat-label">3D asset library</div></div>
+        <div class="stat"><div class="stat-number">15<span class="acc">+</span></div><div class="stat-label">Clients &amp; brands</div></div>
       </div>
     </div>
 
-    <!-- ZOOM -->
-    <div class="zoom-overlay" id="zoom-overlay">
-      <button class="zoom-close" onclick="closeZoom()">✕</button>
-      <button class="zoom-nav" id="zoom-prev" onclick="navigateZoom(-1)">
-        ‹
-      </button>
-      <img id="zoom-img" src="" alt="Vergroot" />
-      <button class="zoom-nav" id="zoom-next" onclick="navigateZoom(1)">
-        ›
-      </button>
-      <div class="zoom-counter" id="zoom-counter"></div>
+  </div><!-- end about-grid -->
+  </div><!-- end about-inner -->
+</section>
+<section id="expertise" class="dark-sec">
+  <div class="sec-inner">
+  <div class="section-label">What I do</div>
+  <h2 class="section-title">MY<br>EXPERTISE</h2>
+  <div class="expertise-grid">
+
+    <!-- Card 1 — Environments -->
+    <!-- ★ Replace src with images/exp-environments.jpg -->
+    <div class="expertise-card reveal" onclick="openLightbox('environments')">
+      <div class="exp-img-wrap">
+        <img class="exp-img" src="images/exp-environments.jpg" alt="3D Environments"
+             onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80'">
+        <div class="exp-hint">View gallery ↗</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-num">01</div>
+        <div class="exp-name">ENVIRONMENTS</div>
+        <p class="exp-desc">I create immersive 3D environments that turn ideas into fully realized visual worlds. Using my own library with 2000+ assets I make sure each world is a unique piece, whether it are album covers, poster designs or social media content.</p>
+        <div class="tools-list">
+          <span class="tool-tag">Blender</span><span class="tool-tag">Photoshop</span><span class="tool-tag">Midjourney</span><span class="tool-tag">Topaz</span>
+        </div>
+      </div>
     </div>
 
-    <script>
-      /* Mobile menu */
-      function toggleMenu() {
-        const m = document.getElementById("mobile-menu");
-        m.classList.toggle("open");
-        document.body.style.overflow = m.classList.contains("open")
-          ? "hidden"
-          : "";
-      }
+    <!-- Card 2 — Logo Renders -->
+    <div class="expertise-card reveal" onclick="openLightbox('logos')">
+      <div class="exp-img-wrap">
+        <img class="exp-img" src="images/exp-logos.jpg" alt="Logo Renders"
+             onerror="this.src='https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=800&q=80'">
+        <div class="exp-hint">View gallery ↗</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-num">02</div>
+        <div class="exp-name">LOGO RENDERS</div>
+        <p class="exp-desc">I make brands stand out by turning static logos into bold 3D visuals. I mainly work with Blender as my 3D software, next to editing tools as Adobe Photoshop or Premiere Pro. Besides that, I also use AI tools such as Kling, Midjourney and Topaz.</p>
+        <div class="tools-list">
+          <span class="tool-tag">Blender</span><span class="tool-tag">Premiere Pro</span><span class="tool-tag">Kling</span><span class="tool-tag">AI Tools</span>
+        </div>
+      </div>
+    </div>
 
-      /* Theme toggle */
-      function toggleTheme(chk) {
-        const dark = chk.checked;
-        document.body.classList.toggle("dark", dark);
-        localStorage.setItem("jelle_theme", dark ? "dark" : "light");
-      }
-      // Apply saved theme on load (default = light)
-      (function () {
-        const saved = localStorage.getItem("jelle_theme");
-        if (saved === "dark") {
-          document.body.classList.add("dark");
-          document.getElementById("theme-chk").checked = true;
-        }
-      })();
+    <!-- Card 3 — LED Visuals -->
+    <div class="expertise-card reveal" onclick="openLightbox('led')">
+      <div class="exp-img-wrap">
+        <img class="exp-img" src="images/exp-led.jpg" alt="LED Visuals"
+             onerror="this.src='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80'">
+        <div class="exp-hint">View gallery ↗</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-num">03</div>
+        <div class="exp-name">LED VISUALS</div>
+        <p class="exp-desc">I create 3D LED visuals that sync with music and elevate live performances. With over five years of experience in event &amp; production management, I understand how shows operate and what it takes to lift them up to the next level.</p>
+        <div class="tools-list">
+          <span class="tool-tag">Resolume</span><span class="tool-tag">Blender</span><span class="tool-tag">Live Production</span>
+        </div>
+      </div>
+    </div>
 
-      /* Scroll top */
-      window.addEventListener("scroll", () => {
-        document
-          .getElementById("scroll-top")
-          .classList.toggle("visible", window.scrollY > 400);
-      });
+  </div><!-- end expertise-grid -->
+  </div><!-- end sec-inner -->
+</section>
 
-      /* Reveal */
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e, i) => {
-            if (e.isIntersecting) {
-              setTimeout(() => e.target.classList.add("visible"), i * 70);
-              obs.unobserve(e.target);
-            }
-          });
-        },
-        { threshold: 0.07 },
-      );
-      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+<!-- ═══════════ WORK ═══════════ -->
+<section id="work" class="dark-sec">
+  <div class="sec-inner">
+    <div>
+      <div class="section-label">Selected projects</div>
+      <h2 class="section-title">MY<br>WORK</h2>
+    </div>
+    <p class="work-aside">From emerging concepts to internationally recognised DJs and brands such as <strong>Macky Gee</strong> and <strong>Bad Habitz Festival</strong>.</p>
+  </div>
 
-      /* Accordion */
-      function toggleAcc(btn) {
-        const body = btn.nextElementSibling;
-        const open = body.classList.contains("open");
-        document
-          .querySelectorAll(".acc-body")
-          .forEach((b) => b.classList.remove("open"));
-        document
-          .querySelectorAll(".acc-trigger")
-          .forEach((b) => b.classList.remove("open"));
-        if (!open) {
-          body.classList.add("open");
-          btn.classList.add("open");
-        }
-      }
+  <!-- Bleetfoef block — photo strip + text -->
+  <!-- ★ Replace images/work-bleet-1.jpg … -4.jpg with your own -->
+  <div style="border:1px solid var(--border);margin-bottom:1px;" class="reveal">
+    <div class="photo-strip">
+      <img src="images/work-bleet-1.jpg" alt="Bleetfoef show"   onerror="this.src='https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600&q=80'">
+      <img src="images/work-bleet-2.jpg" alt="Bleetfoef crowd"  onerror="this.src='https://images.unsplash.com/photo-1540039155733-5bb30b4fa54b?w=600&q=80'">
+      <img src="images/work-bleet-3.jpg" alt="Bleetfoef stage"  onerror="this.src='https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=600&q=80'">
+      <img src="images/work-bleet-4.jpg" alt="Bleetfoef lights" onerror="this.src='https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=600&q=80'">
+    </div>
+    <div class="work-card">
+      <div class="work-tag">LED Visuals · Show Direction · Co-Founder</div>
+      <h3 class="work-name">BLEETFOEF MIDNIGHT SHOWS</h3>
+      <p class="work-body">I'm the co-founder of Bleetforce NPO, the organizing body behind Bleetfoef, a Belgian Drum &amp; Bass rave concept that has been making waves over the past five years. With a growing international community of 20.000+ fans across social media, we strive to do better every time.<br><br>By creating unique storylines behind each event, we turn every rave into an experience like no other. We design everything to create unforgettable moments with top-tier productions, one-of-a-kind midnight shows, delicious food and interactive elements.<br><br>While being responsible for the creative and audiovisual direction of these midnight shows, I design LED visuals that breathe life into the visual experience on stage.</p>
+    </div>
+  </div>
 
-      /* Shuffle */
-      function shuffle(arr) {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      }
-      const shuffledJelle = shuffle(
-        Array.from({ length: 35 }, (_, i) => i + 1),
-      );
+  <!-- Environments + VDV -->
+  <div class="work-grid reveal">
+    <div class="work-card featured">
+      <div class="work-tag">3D Environments · Album Art · Posters</div>
+      <h3 class="work-name">ENVIRONMENTS &amp; COVERS</h3>
+      <p class="work-body">Through different compositions, atmospheres and lighting techniques, I've created a wide range of 3D environments. From emerging concepts to internationally recognized DJs and brands, such as Macky Gee and Bad Habitz Festival. I design each scene to capture a specific mood or story, whether it is for album artwork, social content, or promotional visuals.</p>
+      <div class="clients-block">
+        <div class="clients-lbl">Previously designed for</div>
+        <div class="clients-names"><strong>Anticipate</strong> · VDV · Kyli · Yashi · <strong>Construktiv</strong> · Bonk · <strong>Bleetfoef</strong> · Tempo · VolupTuary · Yngace · <strong>Escaperz</strong> · SOLID STATE · Inflate · and more</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1px;">
+      <!-- ★ Replace with images/work-vdv.jpg -->
+      <img class="vdv-img" src="images/work-vdv.jpg" alt="VDV" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80'">
+      <div class="work-card">
+        <div class="work-tag">Logo Renders · VDV × Bad Habitz</div>
+        <h3 class="work-name">VDV JUNGLE GOD</h3>
+        <p class="work-body">I collaborated with VDV and Bad Habitz Festival on the very first 100% VDV set, featuring a fully integrated audiovisual show. The concept was to represent the DJ as an ancient jungle god, drawing inspiration from Mayan mythology and ritualistic visuals. I developed a series of custom 3D logo animations designed to enhance the artist's live performance throughout the entire show.</p>
+      </div>
+    </div>
+  </div><!-- end work-grid -->
+  </div><!-- end sec-inner -->
+</section>
 
-      /* JPEG/JPG fallback — probeert .jpg → .jpeg → .JPG → .JPEG */
-      function setImgWithFallback(img, base) {
-        const exts = ["jpg", "jpeg", "JPG", "JPEG"];
-        let idx = 0;
-        img.src = `${base}.${exts[idx]}`;
-        img.onerror = function () {
-          idx++;
-          if (idx < exts.length) {
-            img.src = `${base}.${exts[idx]}`;
-          } else {
-            img.style.display = "none"; // geen enkel formaat gevonden
-          }
-        };
-      }
+<!-- ═══════════ WORKFLOW — LIGHT ═══════════ -->
+<section id="workflow" class="wf-section">
+  <div class="wf-inner">
+  <div class="reveal">
+    <div class="wf-label">How I work</div>
+    <div class="wf-main-title">MY WORKFLOW</div>
+  </div>
+  <div class="wf-steps">
 
-      /* Teaser — 4 preview photos */
-      (function buildTeaser() {
-        const teaser = document.getElementById("gallery-teaser");
-        shuffledJelle.slice(0, 4).forEach((n, idx) => {
-          const div = document.createElement("div");
-          div.className =
-            "gallery-teaser-item" + (idx === 3 ? " last-item" : "");
-          div.onclick = openGallery;
-          const img = document.createElement("img");
-          img.alt = `Jelle ${n}`;
-          img.loading = "lazy";
-          setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
-          div.appendChild(img);
-          teaser.appendChild(div);
-        });
-      })();
+    <!-- Step 1: number+title left · text+arrow right -->
+    <div class="wf-row reveal">
+      <div>
+        <div class="wf-big">01</div>
+        <span class="wf-step-word">STEP 1.</span>
+        <div class="wf-title">CONCEPT &amp;<br>DIRECTION</div>
+      </div>
+      <div>
+        <p class="wf-desc">Every project starts with defining the visual identity and overall direction, in which I explore different ideas through references, moodboards and early sketches. Whether it's for live shows, brands or digital content, this phase is all about shaping a clear concept, setting the foundation for everything that follows.</p>
+        <!-- Arrow curves down-right, pointing toward step 2 which is on the right side -->
+        <div class="wf-arrow-wrap end">
+          <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 10 C 10 50, 80 50, 88 60" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <polyline points="76,56 88,60 80,50" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
 
-      /* Gallery overlay */
-      let galleryBuilt = false;
-      // Random aspect ratios for visual variety (portrait, square, landscape mix)
-      const aspectRatios = [
-        "1/1",
-        "1/1",
-        "1/1", // square (common)
-        "3/4",
-        "3/4", // portrait
-        "4/3",
-        "4/3", // landscape
-        "2/3", // tall portrait
-        "3/2", // wide landscape
-        "5/6", // slightly tall
-      ];
-      function randAspect() {
-        return aspectRatios[Math.floor(Math.random() * aspectRatios.length)];
-      }
+    <!-- Step 2: mirrored — text+arrow left · number+title right -->
+    <div class="wf-row mirror reveal" style="direction:rtl;">
+      <div style="direction:ltr; text-align:right;">
+        <div class="wf-big">02</div>
+        <span class="wf-step-word" style="display:block;">STEP 2.</span>
+        <div class="wf-title">3D<br>DEVELOPMENT</div>
+      </div>
+      <div style="direction:ltr;">
+        <p class="wf-desc">Once the direction is clear, I start translating the concept into 3D. This involves building environments, developing compositions, testing lighting and experimenting with different visual approaches. Throughout this process, I resolve any issues and ensure the visuals not only look strong, but also communicate the intended mood or message.</p>
+        <!-- Arrow curves down-left, pointing toward step 3 which is on the left -->
+        <div class="wf-arrow-wrap">
+          <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M90 10 C 90 50, 20 50, 12 60" stroke="#111111" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <polyline points="24,56 12,60 20,50" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
 
-      function openGallery() {
-        document.getElementById("gallery-overlay").classList.add("open");
-        document.body.style.overflow = "hidden";
-        if (!galleryBuilt) {
-          const grid = document.getElementById("jelle-gallery-grid");
-          shuffledJelle.forEach((n) => {
-            const img = document.createElement("img");
-            img.alt = `Jelle ${n}`;
-            img.loading = "lazy";
-            img.style.aspectRatio = randAspect();
-            img.style.objectFit = "cover";
-            img.onclick = () => openZoom(img, grid);
-            setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
-            grid.appendChild(img);
-          });
-          galleryBuilt = true;
-        }
-      }
-      function closeGallery() {
-        document.getElementById("gallery-overlay").classList.remove("open");
-        if (!document.getElementById("zoom-overlay").classList.contains("open"))
-          document.body.style.overflow = "";
-      }
+    <!-- Step 3: same as step 1 layout, no arrow -->
+    <div class="wf-row reveal">
+      <div>
+        <div class="wf-big">03</div>
+        <span class="wf-step-word">STEP 3.</span>
+        <div class="wf-title">FINAL<br>VISUALS</div>
+      </div>
+      <div>
+        <p class="wf-desc">In the last stage, I refine the details and finalize the renders or animations. I focus on a polished result that captures attention and leaves a lasting impression whilst fully working within its intended context.</p>
+      </div>
+    </div>
 
-      /* Scroll-to-top inside gallery */
-      function galScrollTop() {
-        document
-          .getElementById("jelle-gal-body")
-          .scrollTo({ top: 0, behavior: "smooth" });
-      }
-      document
-        .getElementById("jelle-gal-body")
-        .addEventListener("scroll", function () {
-          const btn = document.getElementById("gal-totop");
-          btn.classList.toggle("visible", this.scrollTop > 300);
-        });
+  </div>
+</section>
 
-      /* Zoom */
-      let zoomImgs = [],
-        zoomIdx = 0;
-      function openZoom(img, container) {
-        zoomImgs = Array.from(container.querySelectorAll("img"));
-        zoomIdx = zoomImgs.indexOf(img);
-        showZoom();
-      }
-      function showZoom() {
-        const zi = document.getElementById("zoom-img");
-        zi.style.opacity = "0";
-        setTimeout(() => {
-          zi.src = zoomImgs[zoomIdx].src;
-          zi.style.opacity = "1";
-        }, 110);
-        document.getElementById("zoom-counter").textContent =
-          zoomIdx + 1 + " / " + zoomImgs.length;
-        document.getElementById("zoom-overlay").classList.add("open");
-      }
-      function navigateZoom(dir) {
-        event.stopPropagation();
-        zoomIdx = (zoomIdx + dir + zoomImgs.length) % zoomImgs.length;
-        showZoom();
-      }
-      function closeZoom() {
-        document.getElementById("zoom-overlay").classList.remove("open");
-      }
-      document.getElementById("zoom-overlay").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("zoom-overlay")) closeZoom();
-      });
-      document.addEventListener("keydown", (e) => {
-        const z = document
-          .getElementById("zoom-overlay")
-          .classList.contains("open");
-        const g = document
-          .getElementById("gallery-overlay")
-          .classList.contains("open");
-        if (e.key === "Escape") {
-          if (z) closeZoom();
-          else if (g) closeGallery();
-        }
-        if (z && e.key === "ArrowRight") navigateZoom(1);
-        if (z && e.key === "ArrowLeft") navigateZoom(-1);
-      });
+<!-- ═══════════ CONTACT ═══════════ -->
+<!-- ★ CHANGE 5: contact-left-text gets text-center on mobile via CSS class -->
+<section id="contact" class="dark-sec">
+  <div class="contact-grid">
+    <div class="contact-left-text reveal">
+      <div class="section-label">Get in touch</div>
+      <h2 class="section-title">LET'S<br>CHAT</h2>
+      <p class="contact-tagline">Whether you're an artist, event organiser or brand looking to stand out — I'd love to hear about your project.</p>
+      <div class="contact-info">
+        <div class="ci"><div class="ci-icon">✉</div><a href="/cdn-cgi/l/email-protection#a0c9cec6cf8ed9c1d2c9cec1c5d4d3e0c7cdc1c9cc8ec3cfcd"><span class="__cf_email__" data-cfemail="2e4740484100574f5c47404f4b5a5d6e49434f4742004d4143">[email&#160;protected]</span></a></div>
+        <div class="ci"><div class="ci-icon">☏</div><a href="tel:+32456730054">+32 (0) 456 73 00 54</a></div>
+        <div class="ci"><div class="ci-icon">@</div><a href="https://instagram.com/percepted.realm" target="_blank">@percepted.realm</a></div>
+      </div>
+    </div>
 
-      /* ══════════════════════════════════════════════
-         TESTIMONIALS — Google Sheets integratie
-         ══════════════════════════════════════════════
-         Stap 1: Maak een Google Sheet aan met kolommen:
-                 A: Timestamp  B: Naam  C: Titel  D: Bericht  E: Goedgekeurd
-         Stap 2: Volg de instructies in setup-testimonials.html
-         Stap 3: Vervang de twee URLs hieronder door jouw eigen script-URL
-      ════════════════════════════════════════════════ */
+    <div class="reveal">
+      <div id="form-success" class="form-success">Message sent! I'll get back to you as soon as possible.</div>
+      <form class="contact-form" id="contact-form"
+            action="https://formspree.io/f/mgorzqlq"
+            method="POST">
+        <div class="form-row">
+          <div class="fg"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
+          <div class="fg"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="your@email.com" required></div>
+        </div>
+        <div class="fg">
+          <label for="subject">Project type</label>
+          <select id="subject" name="subject">
+            <option value="">Select a type...</option>
+            <option>3D Environments</option>
+            <option>Logo Renders</option>
+            <option>LED Visuals</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label for="message">Message</label><textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea></div>
+        <div class="form-foot">
+          <button type="submit" class="btn-primary">Send message</button>
+          <span class="form-note">I respond within 24 hours.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
-      // ▼▼▼ VERVANG DEZE URL DOOR JOUW APPS SCRIPT WEB APP URL ▼▼▼
-      const SHEET_READ_URL =
-        "https://script.google.com/macros/s/AKfycbycGhBvr-e3Bssrpanhwhmj-nmfokGJMdA_s27QOpYYKMYLNXOSj52OAe9634w1zyElxA/exec";
-      const SHEET_WRITE_URL =
-        "https://script.google.com/macros/s/AKfycbycGhBvr-e3Bssrpanhwhmj-nmfokGJMdA_s27QOpYYKMYLNXOSj52OAe9634w1zyElxA/exec"; // mag dezelfde zijn
-      // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+<!-- FOOTER -->
+<footer>
+  <a href="#home" class="footer-logo">YARI NAETS</a>
+  <span>© 2025 Yari Naets · @percepted.realm</span>
+  <div class="footer-links">
+    <a href="https://instagram.com/percepted.realm" target="_blank">Instagram</a>
+    <a href="/cdn-cgi/l/email-protection#5c35323a3372253d2e35323d39282f1c3b313d3530723f3331">Email</a>
+    <a href="tel:+32456730054">Call</a>
+  </div>
+</footer>
 
-      async function loadTestimonials() {
-        const container = document.getElementById("testimonials-container");
-        const archiveList = document.getElementById("t-archive-list");
-        const archive = document.getElementById("t-archive");
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
 
-        try {
-          const res = await fetch(SHEET_READ_URL, {
-            method: "GET",
-            redirect: "follow",
-          });
-          const data = await res.json(); // verwacht array van {naam, titel, bericht}
+<!-- ═══════════ LIGHTBOXES ═══════════ -->
+<!-- ★ CHANGE 3: masonry grid (unequal sizes) + click-to-zoom overlay -->
+<!-- Replace all image srcs with your actual photos from /images/ -->
 
-          container.innerHTML = "";
-          archiveList.innerHTML = "";
+<div class="lightbox" id="lb-environments">
+  <div class="lb-head">
+    <div class="lb-title">ENVIRONMENTS</div>
+    <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+  </div>
+  <div class="lb-grid">
+    <img src="images/env-1.jpg" alt="Environment 1" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=85'">
+    <img src="images/env-2.jpg" alt="Environment 2" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=85'">
+    <img src="images/env-3.jpg" alt="Environment 3" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1536566482680-fca31930a0bd?w=900&q=85'">
+    <img src="images/env-4.jpg" alt="Environment 4" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1610296669228-602fa827fc1f?w=900&q=85'">
+    <img src="images/env-5.jpg" alt="Environment 5" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1483232539664-d89822fb5d3e?w=900&q=85'">
+    <img src="images/env-6.jpg" alt="Environment 6" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=900&q=85'">
+  </div>
+  <p class="lb-caption">Through different compositions, atmospheres and lighting techniques, I've created a wide range of 3D environments — from album covers to poster designs and social media content. Each world is built from my personal library of 2000+ assets.</p>
+</div>
 
-          if (!data.length) {
-            container.innerHTML =
-              '<p class="t-loading">Nog geen testimonials.</p>';
-            return;
-          }
+<div class="lightbox" id="lb-logos">
+  <div class="lb-head">
+    <div class="lb-title">LOGO RENDERS</div>
+    <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+  </div>
+  <div class="lb-grid">
+    <img src="images/logo-1.jpg" alt="Logo 1" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=900&q=85'">
+    <img src="images/logo-2.jpg" alt="Logo 2" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=85'">
+    <img src="images/logo-3.jpg" alt="Logo 3" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&q=85'">
+    <img src="images/logo-4.jpg" alt="Logo 4" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85'">
+    <img src="images/logo-5.jpg" alt="Logo 5" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=900&q=85'">
+    <img src="images/logo-6.jpg" alt="Logo 6" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1543286386-713bdd548da4?w=900&q=85'">
+  </div>
+  <p class="lb-caption">From static logos to bold 3D visuals — I develop custom renders and animations that give brands a strong, recognisable identity across both stage and social media platforms.</p>
+</div>
 
-          // Laatste 4 → kaarten, de rest → archief
-          const recent = data.slice(-4);
-          const older = data.slice(0, Math.max(0, data.length - 4)).reverse();
+<div class="lightbox" id="lb-led">
+  <div class="lb-head">
+    <div class="lb-title">LED VISUALS</div>
+    <button class="lb-close" onclick="closeLightbox()">✕ Close</button>
+  </div>
+  <div class="lb-grid">
+    <img src="images/led-1.jpg" alt="LED 1" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=900&q=85'">
+    <img src="images/led-2.jpg" alt="LED 2" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1506157786151-b8491531f063?w=900&q=85'">
+    <img src="images/led-3.jpg" alt="LED 3" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1540039155733-5bb30b4fa54b?w=900&q=85'">
+    <img src="images/led-4.jpg" alt="LED 4" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=900&q=85'">
+    <img src="images/led-5.jpg" alt="LED 5" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=900&q=85'">
+    <img src="images/led-6.jpg" alt="LED 6" onclick="zoomPhoto(this)" onerror="this.src='https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=900&q=85'">
+  </div>
+  <p class="lb-caption">3D LED visuals that sync with music and elevate live performances. With over five years of experience in event &amp; production management, I understand how shows operate and what it takes to lift them to the next level.</p>
+</div>
 
-          recent.forEach((t) => {
-            const c = document.createElement("div");
-            c.className = "testimonial-card";
-            c.innerHTML = `<p class="testimonial-text">${t.bericht}</p><div class="testimonial-name">— ${t.naam}</div>`;
-            container.appendChild(c);
-          });
+<!-- ★ CHANGE 3b — single photo zoom layer (shared, inside body) -->
+<div class="lb-zoom-overlay" id="zoom-overlay" onclick="closeZoom()">
+  <img id="zoom-img" src="" alt="Zoomed photo">
+</div>
 
-          if (older.length) {
-            archive.classList.add("visible");
-            older.forEach((t) => {
-              const btn = document.createElement("button");
-              btn.className = "t-archive-item";
-              btn.innerHTML = `<span class="t-archive-dot"></span><span class="t-archive-title">${t.titel || t.naam}</span>`;
-              btn.onclick = () => openPopup(t);
-              archiveList.appendChild(btn);
-            });
-          }
-        } catch (err) {
-          container.innerHTML =
-            '<p class="t-loading">Kon testimonials niet laden.</p>';
-          console.error("Testimonials fout:", err);
-        }
-      }
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+/* ── Scroll-to-top ── */
+const scrollBtn = document.getElementById('scroll-top');
+window.addEventListener('scroll', () => {
+  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+});
 
-      function openPopup(t) {
-        document.getElementById("t-popup-text").textContent = t.bericht;
-        document.getElementById("t-popup-name").textContent = "— " + t.naam;
-        document.getElementById("t-popup").classList.add("open");
-        document.body.style.overflow = "hidden";
-      }
-      function closePopup() {
-        document.getElementById("t-popup").classList.remove("open");
-        document.body.style.overflow = "";
-      }
-      document.getElementById("t-popup").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("t-popup")) closePopup();
-      });
+/* ── Reveal on scroll ── */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-      async function submitTestimonial() {
-        const naam = document.getElementById("t-name").value.trim();
-        const titel = document.getElementById("t-short").value.trim();
-        const bericht = document.getElementById("t-text").value.trim();
-        if (!naam || !bericht) return;
+/* ── Lightbox open/close ── */
+function openLightbox(type) {
+  document.getElementById('lb-' + type).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.querySelectorAll('.lightbox').forEach(lb => lb.classList.remove('open'));
+  closeZoom();
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.lightbox').forEach(lb => {
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+});
 
-        const btn = document.querySelector(".t-form .btn-orange");
-        btn.disabled = true;
-        btn.textContent = "Versturen…";
+/* ── Photo zoom (change 3b) ── */
+function zoomPhoto(img) {
+  const overlay = document.getElementById('zoom-overlay');
+  const zImg    = document.getElementById('zoom-img');
+  zImg.src = img.src;
+  overlay.classList.add('open');
+  /* stop click from also triggering closeLightbox */
+  event.stopPropagation();
+}
+function closeZoom() {
+  document.getElementById('zoom-overlay').classList.remove('open');
+}
 
-        try {
-          await fetch(SHEET_WRITE_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              action: "write",
-              naam,
-              titel: titel || naam,
-              bericht,
-            }),
-          });
-          document.getElementById("t-name").value = "";
-          document.getElementById("t-short").value = "";
-          document.getElementById("t-text").value = "";
-          document.getElementById("t-success").style.display = "block";
-          setTimeout(
-            () => (document.getElementById("t-success").style.display = "none"),
-            5000,
-          );
-        } catch (err) {
-          document.getElementById("t-error").style.display = "block";
-          setTimeout(
-            () => (document.getElementById("t-error").style.display = "none"),
-            5000,
-          );
-        } finally {
-          btn.disabled = false;
-          btn.textContent = "Verstuur bericht";
-        }
-      }
+/* Escape key closes both */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('zoom-overlay').classList.contains('open')) {
+      closeZoom();
+    } else {
+      closeLightbox();
+    }
+  }
+});
 
-      // Laad bij pagina-opening
-      loadTestimonials();
-
-      /* Contact */
-      function submitContact(e) {
-        e.preventDefault();
-        const s = document.getElementById("contact-success");
-        s.style.display = "block";
-        e.target.reset();
-        setTimeout(() => (s.style.display = "none"), 5000);
-      }
-    </script>
-  </body>
-</html>
+/* ── Contact form (Formspree) ── */
+const form    = document.getElementById('contact-form');
+const success = document.getElementById('form-success');
+form.addEven
