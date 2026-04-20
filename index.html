@@ -1,0 +1,2090 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supportersclub Jelle Naets</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f7f4ef;
+        --bg2: #edeae3;
+        --card: #ffffff;
+        --dark: #1a1a1a;
+        --muted: #6b6560;
+        --orange: #e85d00;
+        --orange-light: #ff7a20;
+        --orange-pale: rgba(232, 93, 0, 0.08);
+        --border: rgba(232, 93, 0, 0.15);
+        --border-n: rgba(0, 0, 0, 0.08);
+        --max-w: 1200px;
+        --pad: clamp(1.5rem, 5vw, 5rem);
+        --nav-bg: rgba(247, 244, 239, 0.96);
+        --nav-logo-c: #1a1a1a;
+        --nav-link-c: #6b6560;
+        --mob-bg: rgba(247, 244, 239, 0.98);
+        --mob-link-c: #1a1a1a;
+        --mob-close-c: #1a1a1a;
+        --ham-c: #1a1a1a;
+      }
+      /* ── DARK MODE ── */
+      body.dark {
+        --bg: #111111;
+        --bg2: #181818;
+        --card: #1e1e1e;
+        --dark: #f0ebe3;
+        --muted: rgba(240, 235, 227, 0.55);
+        --border-n: rgba(255, 255, 255, 0.07);
+        --orange-pale: rgba(232, 93, 0, 0.12);
+        --nav-bg: rgba(17, 17, 17, 0.96);
+        --nav-logo-c: #f0ebe3;
+        --nav-link-c: rgba(240, 235, 227, 0.55);
+        --mob-bg: rgba(17, 17, 17, 0.98);
+        --mob-link-c: #f0ebe3;
+        --mob-close-c: #f0ebe3;
+        --ham-c: #f0ebe3;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--dark);
+        font-family: "Barlow", sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        overflow-x: hidden;
+        transition:
+          background 0.35s,
+          color 0.35s;
+      }
+      .inner {
+        max-width: var(--max-w);
+        margin: auto;
+        padding: 0 var(--pad);
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 300;
+        background: var(--nav-bg);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-n);
+        transition: background 0.35s;
+      }
+      .nav-inner {
+        max-width: var(--max-w);
+        margin: auto;
+        padding: 0.9rem var(--pad);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+      }
+      .nav-logo img {
+        height: 36px;
+      }
+      .nav-logo span {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--nav-logo-c);
+        transition: color 0.35s;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.8rem;
+        list-style: none;
+        align-items: center;
+      }
+      .nav-links a {
+        font-size: 0.71rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--nav-link-c);
+        text-decoration: none;
+        transition: color 0.2s;
+        font-weight: 600;
+      }
+      .nav-links a:hover {
+        color: var(--orange);
+      }
+      .nav-accent {
+        border: 1.5px solid var(--orange) !important;
+        padding: 0.42rem 1.2rem;
+        border-radius: 3px;
+        color: var(--orange) !important;
+        transition:
+          background 0.2s,
+          color 0.2s !important;
+      }
+      .nav-accent:hover {
+        background: var(--orange) !important;
+        color: #fff !important;
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--ham-c);
+        transition: background 0.35s;
+      }
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--mob-bg);
+        z-index: 400;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.2rem;
+        transition: background 0.35s;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mob-link-c);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--orange);
+      }
+      .mobile-close {
+        position: absolute;
+        top: 1.5rem;
+        right: var(--pad);
+        background: none;
+        border: none;
+        color: var(--mob-close-c);
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      /* THEME TOGGLE — compact, symbol inside knob */
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .theme-switch {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .theme-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+      }
+      .theme-slider {
+        position: absolute;
+        inset: 0;
+        background: #d4cfc7;
+        border-radius: 24px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: flex;
+        align-items: center;
+      }
+      /* the knob */
+      .theme-slider::before {
+        content: "☀️";
+        position: absolute;
+        left: 3px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        line-height: 18px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .theme-switch input:checked + .theme-slider {
+        background: rgba(232, 93, 0, 0.35);
+      }
+      .theme-switch input:checked + .theme-slider::before {
+        content: "🌙";
+        transform: translate(20px, -50%);
+      }
+
+      /* HERO — donker voor impact */
+      #home {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 55% at 65% 40%,
+            rgba(232, 93, 0, 0.22) 0%,
+            transparent 65%
+          ),
+          #141414;
+      }
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        background: url("images/hero.jpg") center top/cover no-repeat;
+        opacity: 0.62; /* ← Vervang 'images/hero.jpg' door jouw eigen foto */
+      }
+      @media (max-width: 768px) {
+        .hero-photo {
+          background-image: url("images/hero-mobile.jpg");
+          background-position: center top;
+        }
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(20, 20, 20, 1) 0%,
+          rgba(20, 20, 20, 0.1) 50%,
+          rgba(20, 20, 20, 0.5) 100%
+        );
+      }
+      .hero-stripe {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(to bottom, var(--orange), transparent);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 5rem;
+        max-width: 900px;
+      }
+      /* BADGE */
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.66rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--orange);
+        border: 1px solid rgba(232, 93, 0, 0.4);
+        padding: 0.38rem 1rem;
+        border-radius: 2px;
+        margin-bottom: 1.4rem;
+        animation: fadeUp 0.7s ease both;
+      }
+      .hero-badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        background: var(--orange);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .hero-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 900;
+        font-size: clamp(4rem, 12vw, 10.5rem);
+        line-height: 0.88;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: #f5f0e8;
+        animation: fadeUp 0.7s 0.1s ease both;
+      }
+      .hero-title .hl {
+        color: var(--orange);
+      }
+      .hero-title .sub-name {
+        font-weight: 400;
+        font-size: 0.44em;
+        color: rgba(245, 240, 232, 0.55);
+        display: block;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.12em;
+      }
+      .hero-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 2.2rem;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        animation: fadeUp 0.7s 0.2s ease both;
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+        font-weight: 300;
+        color: rgba(245, 240, 232, 0.65);
+        max-width: 440px;
+        line-height: 1.8;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 0.7rem;
+        flex-shrink: 0;
+      }
+
+      /* stripe transitie donker → licht */
+      .hero-to-light {
+        height: 5px;
+        background: linear-gradient(
+          to right,
+          var(--orange) 0%,
+          transparent 55%
+        );
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 0.74rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.88rem 1.9rem;
+        border-radius: 3px;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: none;
+        font-family: "Barlow", sans-serif;
+        font-weight: 600;
+      }
+      .btn-orange {
+        background: var(--orange);
+        color: #fff;
+      }
+      .btn-orange:hover {
+        background: var(--orange-light);
+        transform: translateY(-2px);
+      }
+      .btn-ghost-dark {
+        background: transparent;
+        color: #f5f0e8;
+        border: 1.5px solid rgba(245, 240, 232, 0.3);
+      }
+      .btn-ghost-dark:hover {
+        border-color: var(--orange);
+        color: var(--orange);
+        transform: translateY(-2px);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--dark);
+        border: 1.5px solid var(--border-n);
+      }
+      .btn-ghost:hover {
+        border-color: var(--orange);
+        color: var(--orange);
+        transform: translateY(-2px);
+      }
+
+      /* Sections */
+      .section {
+        padding: 5.5rem 0;
+      }
+      .section + .section {
+        border-top: 1px solid var(--border-n);
+      }
+      .sec-label {
+        font-size: 0.63rem;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin-bottom: 0.6rem;
+        font-weight: 700;
+      }
+      .sec-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+        font-size: clamp(2.2rem, 5vw, 3.6rem);
+        text-transform: uppercase;
+        line-height: 0.95;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+        transition: color 0.35s;
+      }
+      .sec-title .hl {
+        color: var(--orange);
+      }
+
+      /* Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ACCORDION */
+      .accordion {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .acc-item {
+        border: 1px solid var(--border-n);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        transition: border-color 0.35s;
+      }
+      .acc-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 1.6rem;
+        background: var(--card);
+        cursor: pointer;
+        border: none;
+        color: var(--dark);
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.08rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-align: left;
+        transition:
+          background 0.2s,
+          color 0.35s;
+      }
+      .acc-trigger:hover,
+      .acc-trigger.open {
+        background: var(--orange-pale);
+      }
+      .acc-icon {
+        width: 30px;
+        height: 30px;
+        border: 1.5px solid var(--border-n);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          transform 0.3s,
+          background 0.2s;
+        color: var(--orange);
+        font-size: 1.1rem;
+        line-height: 1;
+      }
+      .acc-trigger.open .acc-icon {
+        transform: rotate(45deg);
+        background: var(--orange);
+        color: #fff;
+        border-color: var(--orange);
+      }
+      .acc-body {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.45s ease,
+          padding 0.3s;
+        background: var(--bg);
+        padding: 0 1.6rem;
+        font-size: 0.94rem;
+        color: var(--muted);
+        line-height: 1.85;
+      }
+      .acc-body.open {
+        max-height: 900px;
+        padding: 1.4rem 1.6rem;
+      }
+
+      /* Papa blok binnen accordion */
+      .papa-acc-wrap {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+      .papa-acc-text {
+        flex: 1;
+      }
+      .papa-acc-photo {
+        flex-shrink: 0;
+        width: 170px;
+      }
+      .papa-acc-photo a {
+        display: block;
+      }
+      .papa-acc-photo img {
+        width: 100%;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 2px solid var(--border-n);
+        transition:
+          border-color 0.2s,
+          transform 0.25s;
+        display: block;
+      }
+      .papa-acc-photo a:hover img {
+        border-color: var(--orange);
+        transform: scale(1.03);
+      }
+      .papa-photo-label {
+        text-align: center;
+        margin-top: 0.5rem;
+        font-size: 0.68rem;
+        color: var(--muted);
+        letter-spacing: 0.07em;
+      }
+      .papa-photo-label span {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      @media (max-width: 600px) {
+        .papa-acc-wrap {
+          flex-direction: column-reverse;
+        }
+        .papa-acc-photo {
+          width: 100%;
+        }
+        .papa-acc-photo img {
+          aspect-ratio: 16/9;
+        }
+      }
+
+      /* RESULTS TABLE */
+      .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        background: var(--card);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+        transition: background 0.35s;
+      }
+      .results-table th {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--orange);
+        padding: 0.95rem 1.2rem;
+        border-bottom: 2px solid var(--border-n);
+        text-align: left;
+        font-weight: 700;
+        background: var(--bg2);
+        transition: background 0.35s;
+      }
+      .results-table td {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border-n);
+        vertical-align: middle;
+        transition: color 0.35s;
+      }
+      .results-table tr:last-child td {
+        border-bottom: none;
+      }
+      .results-table tr:hover td {
+        background: var(--orange-pale);
+        color: var(--dark);
+      }
+      .result-link {
+        color: var(--orange);
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .result-link:hover {
+        opacity: 0.75;
+        text-decoration: underline;
+      }
+      .badge-result {
+        display: inline-block;
+        padding: 0.22rem 0.65rem;
+        border-radius: 3px;
+        font-size: 0.73rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+      .badge-finish {
+        background: rgba(232, 93, 0, 0.1);
+        color: var(--orange);
+        border: 1px solid rgba(232, 93, 0, 0.25);
+      }
+
+      /* AGENDA */
+      .agenda-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .agenda-card {
+        background: var(--card);
+        border: 1px solid var(--border-n);
+        border-radius: 6px;
+        padding: 1.3rem 1.5rem;
+        display: flex;
+        gap: 1.2rem;
+        align-items: flex-start;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+        transition:
+          box-shadow 0.2s,
+          transform 0.2s,
+          border-color 0.2s,
+          background 0.35s;
+      }
+      .agenda-card:hover {
+        box-shadow: 0 6px 20px rgba(232, 93, 0, 0.12);
+        transform: translateY(-3px);
+        border-color: rgba(232, 93, 0, 0.3);
+      }
+      .agenda-date {
+        flex-shrink: 0;
+        width: 54px;
+        text-align: center;
+        background: var(--orange);
+        border-radius: 4px;
+        padding: 0.5rem 0;
+        color: #fff;
+      }
+      .agenda-date .day {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 900;
+        font-size: 1.55rem;
+        line-height: 1;
+      }
+      .agenda-date .month {
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .agenda-info h4 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 0.98rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 0.25rem;
+        color: var(--dark);
+        transition: color 0.35s;
+      }
+      .agenda-info p {
+        font-size: 0.81rem;
+        color: var(--muted);
+      }
+      .agenda-tag {
+        display: inline-block;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.18rem 0.55rem;
+        border-radius: 2px;
+        margin-top: 0.45rem;
+        background: var(--orange-pale);
+        color: var(--orange);
+        border: 1px solid rgba(232, 93, 0, 0.2);
+        font-weight: 600;
+      }
+
+      /* GALLERY TEASER */
+      .gallery-teaser {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        margin-top: 2rem;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .gallery-teaser-item {
+        position: relative;
+        aspect-ratio: 1;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .gallery-teaser-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.4s,
+          filter 0.3s;
+        filter: brightness(0.88);
+      }
+      .gallery-teaser-item:hover img {
+        transform: scale(1.07);
+        filter: brightness(1);
+      }
+      .gallery-teaser-item.last-item::after {
+        content: "Alle 35 foto's →";
+        position: absolute;
+        inset: 0;
+        background: rgba(232, 93, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      /* GALLERY OVERLAY */
+      .gallery-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 400;
+        background: rgba(18, 18, 18, 0.97);
+        flex-direction: column;
+      }
+      .gallery-overlay.open {
+        display: flex;
+        animation: fadeIn 0.22s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .gal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 1.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-shrink: 0;
+      }
+      .gal-header-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #f5f0e8;
+      }
+      .gal-header-title span {
+        color: var(--orange);
+      }
+      .gal-close {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #f5f0e8;
+        padding: 0.42rem 1rem;
+        border-radius: 3px;
+        cursor: pointer;
+        font-family: "Barlow", sans-serif;
+        font-size: 0.74rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .gal-close:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+      }
+      .gal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+        position: relative;
+      }
+      /* scroll-to-top inside gallery */
+      .gal-totop {
+        position: sticky;
+        bottom: 1.2rem;
+        float: right;
+        width: 38px;
+        height: 38px;
+        background: var(--orange);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        font-weight: 700;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 10;
+        box-shadow: 0 3px 10px rgba(232, 93, 0, 0.4);
+        margin-top: -38px; /* keeps it from pushing layout */
+      }
+      .gal-totop.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .gal-grid {
+        max-width: 900px;
+        margin: 0 auto;
+        columns: 3;
+        column-gap: 8px;
+      }
+      @media (max-width: 700px) {
+        .gal-grid {
+          columns: 2;
+        }
+      }
+      .gal-grid img {
+        width: 100%;
+        display: block;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 8px;
+        transition:
+          transform 0.3s,
+          filter 0.3s;
+        filter: brightness(0.88);
+        break-inside: avoid;
+      }
+      .gal-grid img:hover {
+        transform: scale(1.03);
+        filter: brightness(1);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ZOOM */
+      .zoom-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 600;
+        background: rgba(0, 0, 0, 0.94);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .zoom-overlay.open {
+        display: flex;
+      }
+      .zoom-overlay > img {
+        max-width: 90vw;
+        max-height: 82vh;
+        object-fit: contain;
+        border-radius: 3px;
+        transition: opacity 0.13s;
+      }
+      .zoom-close {
+        position: absolute;
+        top: 1.2rem;
+        right: 1.5rem;
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #fff;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .zoom-close:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+      }
+      .zoom-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(20, 20, 20, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        transition: background 0.2s;
+      }
+      .zoom-nav:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+      }
+      #zoom-prev {
+        left: 1.2rem;
+      }
+      #zoom-next {
+        right: 1.2rem;
+      }
+      .zoom-counter {
+        position: absolute;
+        bottom: 1.2rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* TESTIMONIALS */
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .testimonial-card {
+        background: var(--card);
+        border: 1px solid var(--border-n);
+        border-radius: 6px;
+        padding: 1.6rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+        transition:
+          background 0.35s,
+          border-color 0.35s;
+      }
+      .testimonial-card::before {
+        content: '"';
+        position: absolute;
+        top: -0.8rem;
+        left: 1rem;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 6rem;
+        color: rgba(232, 93, 0, 0.08);
+        line-height: 1;
+        font-weight: 900;
+        pointer-events: none;
+      }
+      .testimonial-text {
+        font-size: 0.9rem;
+        line-height: 1.85;
+        color: var(--muted);
+        margin-bottom: 1rem;
+        position: relative;
+      }
+      .testimonial-name {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--orange);
+      }
+      .t-form {
+        margin-top: 2.5rem;
+        background: var(--card);
+        border: 1px solid var(--border-n);
+        border-radius: 6px;
+        padding: 2rem;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+        transition: background 0.35s;
+      }
+      .t-form h3 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+        color: var(--dark);
+      }
+      .t-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
+      }
+      .t-row.full {
+        grid-template-columns: 1fr;
+      }
+      .t-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .t-field label {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .t-field input,
+      .t-field textarea {
+        background: var(--bg);
+        border: 1px solid var(--border-n);
+        border-radius: 4px;
+        padding: 0.72rem 1rem;
+        color: var(--dark);
+        font-family: "Barlow", sans-serif;
+        font-size: 0.9rem;
+        transition:
+          border-color 0.2s,
+          background 0.35s,
+          color 0.35s;
+        resize: none;
+      }
+      .t-field input:focus,
+      .t-field textarea:focus {
+        outline: none;
+        border-color: var(--orange);
+      }
+      .t-field textarea {
+        min-height: 105px;
+      }
+      #t-success {
+        display: none;
+        color: var(--orange);
+        font-size: 0.88rem;
+        margin-top: 0.75rem;
+      }
+
+      /* CONTACT */
+      .contact-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      .contact-info p {
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.85;
+        margin-bottom: 2rem;
+      }
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .c-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--dark);
+        text-decoration: none;
+        padding: 1rem 1.2rem;
+        background: var(--card);
+        border: 1px solid var(--border-n);
+        border-radius: 6px;
+        transition:
+          border-color 0.2s,
+          transform 0.2s,
+          background 0.35s,
+          color 0.35s;
+        font-size: 0.88rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      }
+      .c-link:hover {
+        border-color: var(--orange);
+        transform: translateX(4px);
+        color: var(--orange);
+      }
+      .c-link .icon {
+        width: 34px;
+        height: 34px;
+        background: var(--orange-pale);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .c-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .c-form input,
+      .c-form textarea {
+        background: var(--card);
+        border: 1px solid var(--border-n);
+        border-radius: 4px;
+        padding: 0.82rem 1rem;
+        color: var(--dark);
+        font-family: "Barlow", sans-serif;
+        font-size: 0.9rem;
+        transition:
+          border-color 0.2s,
+          background 0.35s,
+          color 0.35s;
+        resize: none;
+      }
+      .c-form input:focus,
+      .c-form textarea:focus {
+        outline: none;
+        border-color: var(--orange);
+      }
+      .c-form textarea {
+        min-height: 115px;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 2rem 0;
+        border-top: 1px solid var(--border-n);
+        background: var(--bg2);
+        transition: background 0.35s;
+      }
+      .foot-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .foot-left {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+      .foot-left img {
+        height: 28px;
+        opacity: 0.7;
+      }
+      .foot-copy {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .foot-papa {
+        color: var(--orange);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border: 1px solid rgba(232, 93, 0, 0.35);
+        padding: 0.38rem 0.9rem;
+        border-radius: 3px;
+        transition: background 0.2s;
+        font-weight: 600;
+      }
+      .foot-papa:hover {
+        background: rgba(232, 93, 0, 0.1);
+      }
+
+      /* SCROLL TOP */
+      #scroll-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 200;
+        width: 42px;
+        height: 42px;
+        background: var(--orange);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        opacity: 0;
+        transition:
+          opacity 0.3s,
+          transform 0.2s;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(232, 93, 0, 0.35);
+      }
+      #scroll-top.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+      #scroll-top:hover {
+        transform: translateY(-3px);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .contact-wrap {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+        .t-row {
+          grid-template-columns: 1fr;
+        }
+        .hero-bottom {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .gallery-teaser {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-inner">
+        <a href="#home" class="nav-logo">
+          <img
+            src="images/logo.png"
+            alt="NJ"
+            onerror="this.style.display = 'none'"
+          />
+          <span>SC Jelle Naets</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#over">Over Jelle</a></li>
+          <li><a href="#resultaten">Resultaten</a></li>
+          <li><a href="#agenda">Agenda</a></li>
+          <li><a href="#galerij">Galerij</a></li>
+          <li><a href="#contact" class="nav-accent">Contact</a></li>
+        </ul>
+        <div style="display: flex; align-items: center; gap: 1rem">
+          <div class="theme-toggle" title="Wissel licht/donker">
+            <label class="theme-switch">
+              <input
+                type="checkbox"
+                id="theme-chk"
+                onchange="toggleTheme(this)"
+              />
+              <span class="theme-slider"></span>
+            </label>
+          </div>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+      <button class="mobile-close" onclick="toggleMenu()">✕</button>
+      <a href="#over" onclick="toggleMenu()">Over Jelle</a>
+      <a href="#resultaten" onclick="toggleMenu()">Resultaten</a>
+      <a href="#agenda" onclick="toggleMenu()">Agenda</a>
+      <a href="#galerij" onclick="toggleMenu()">Galerij</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+      <a href="papa.html" style="color: var(--orange)">Voor Papa ♥</a>
+    </div>
+
+    <!-- HERO -->
+    <section id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-photo"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-stripe"></div>
+      <div class="inner hero-content">
+        <div class="hero-badge">Officiële Supportersclub</div>
+        <h1 class="hero-title">
+          <span class="sub-name">Supportersclub</span>
+          Jelle <span class="hl">Naets</span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub">
+            Welkom bij de officiële supportersclub van mijzelf — triatleet,
+            gewone man die tracht te bewijzen dat grenzen er zijn om verlegd te
+            worden. Volg mijn reis en word deel van mijn verhaal.
+          </p>
+          <div class="hero-cta">
+            <a href="#over" class="btn btn-orange">Ontdek meer</a>
+            <a href="#galerij" class="btn btn-ghost-dark">Galerij</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hero-to-light"></div>
+
+    <!-- OVER -->
+    <section class="section" id="over">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Over mijzelf</p>
+          <h2 class="sec-title">Wie is <span class="hl">Jelle Naets</span>?</h2>
+        </div>
+        <div class="accordion reveal">
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span>Wie ben ik &amp; waarom een supportersclub?</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-body">
+              <p>
+                Ik ben Jelle Naets, een gepassioneerde triatleet uit België.
+                Zwemmen, fietsen en lopen — ik tracht het allemaal te doen met
+                een glimlach. Ik combineer een druk leven met een toewijding aan
+                de sport die bewondering afdwingt. Ik rijd op een Trek Speed
+                Concept in mat zwart met fluo oranje accenten — stijl én
+                prestatie in één.
+              </p>
+              <br />
+              <p>
+                Geboren in 1984 en gedurende mijn hele jeugd in Itegem
+                opgegroeid. Als jonge kerel was Chiro mijn toeverlaat. Ik heb er
+                vele toffe momenten mogen beleven en een ware vriendengroep aan
+                overgehouden. later een geweldige vrouw leren kennen en
+                gesetteld te Wiekevorst met ondertussen 2 kinderen. In 2017 ben
+                ik van job veranderd en heb ik mij aangesloten bij een
+                triatlonclub. Langzaam is dit uitgegroeid tot een echte passie.
+                Een laatbloeier in de sport maar zo lang mogelijk blijven gaan
+                is mijn doel.
+              </p>
+              <br />
+              <p>
+                Een atleet is zo sterk als het netwerk dat hem draagt. Deze
+                supportersclub is opgericht om mij te omringen met mensen die in
+                mij geloven — op wedstrijddagen, maar ook in de vroege
+                trainingsochten en de zware herstelweken. Samen vormen jullie de
+                wind in mijn rug. Welkom in het team!
+              </p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span>Mijn papa ♥</span>
+              <span class="acc-icon">+</span>
+            </button>
+            <div class="acc-body">
+              <div class="papa-acc-wrap">
+                <div class="papa-acc-text">
+                  <p>
+                    Bij elke race draag ik mijn vader mee in mijn hart. Hij was
+                    mijn grootste fan, mijn rots en mijn inspiratie. Zijn
+                    aanmoedigingen (in de sport maar ook daarnaast) klinken in
+                    mijn hoofd bij elke stap, elke slag in het water en elke
+                    omwenteling van de pedalen.
+                  </p>
+                  <br />
+                  <p>
+                    Hij heeft mij geleerd om nooit op te geven. Om, ook als het
+                    pijn doet, door te blijven gaan. Als ik mijzelf overtref is
+                    dat voor hem — want hij is de drijvende wilskracht meer dan
+                    wie dan ook.
+                  </p>
+                  <br />
+                  <p>
+                    <a
+                      href="papa.html"
+                      style="
+                        color: var(--orange);
+                        font-weight: 600;
+                        text-decoration: none;
+                      "
+                      >→ Bezoek de spagina voor mijn papa</a
+                    >
+                  </p>
+                </div>
+                <div class="papa-acc-photo">
+                  <a href="papa.html" title="Bekijk de galerij van papa">
+                    <img
+                      src="images/papa-galerij/foto-1.jpg"
+                      alt="Papa"
+                      onerror="
+                        this.closest('.papa-acc-photo').style.display = 'none'
+                      "
+                    />
+                  </a>
+                  <p class="papa-photo-label">
+                    <span>Klik</span> voor de galerij ♥
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTATEN -->
+    <section class="section" id="resultaten">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Palmares</p>
+          <h2 class="sec-title">Behaalde <span class="hl">Resultaten</span></h2>
+        </div>
+        <div class="reveal" style="overflow-x: auto">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Datum</th>
+                <th>Event</th>
+                <th>Resultaat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2</td>
+                <td>04 mei 2024</td>
+                <td>BK Aquabike Viersel (Masters A)</td>
+                <td>
+                  <a
+                    href="http://results.b-nys.com/indiv?event=2524&pid=731"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish"
+                      >bib — #731</span
+                    ></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>15 jun 2024</td>
+                <td>T100 Willebroek (Masters A)</td>
+                <td>
+                  <a
+                    href="http://results.b-nys.com/indiv?event=2597&pid=42"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish">Bib — #42</span></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>14 sep 2024</td>
+                <td><strong>Challenge Almere-Amsterdam (AG M40-45)</strong></td>
+                <td>
+                  <a
+                    href="https://sporthive.com/events/s/7237122440399159296/race/7237122444694127104/bib/747"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish"
+                      >Bib — #747</span
+                    ></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>04 mei 2025</td>
+                <td>BK Aquabike Viersel</td>
+                <td>
+                  <a
+                    href="http://results.b-nys.com/indiv?event=2824&pid=42"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish">Bib — #42</span></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>14 jun 2025</td>
+                <td>T100 Willebroek (Masters A)</td>
+                <td>
+                  <a
+                    href="http://results.b-nys.com/indiv?event=2902&pid=76"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish">Bib — #76</span></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>22 mar 2026</td>
+                <td>Grand Raid Nisramont</td>
+                <td>
+                  <a
+                    href="https://my.raceresult.com/387565/results#1_CF1223"
+                    target="_blank"
+                    class="result-link"
+                    ><span class="badge-result badge-finish">Bib — #23</span></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p
+          style="
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin-top: 0.9rem;
+            font-style: italic;
+          "
+        >
+          Klik op een resultaat voor de officiële wedstrijdpagina. voeg
+          resultaten toe door geheel tussen tr te copiëren en aan te passen.
+        </p>
+      </div>
+    </section>
+
+    <!-- AGENDA -->
+    <section class="section" id="agenda">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Wedstrijdkalender</p>
+          <h2 class="sec-title">Komende <span class="hl">Wedstrijden</span></h2>
+        </div>
+        <div class="agenda-grid">
+          <div class="agenda-card reveal">
+            <div class="agenda-date">
+              <div class="day">07</div>
+              <div class="month">Mei</div>
+            </div>
+            <div class="agenda-info">
+              <h4>— Wielrwedstrijd Zolder —</h4>
+              <p>Locatie · Afstand</p>
+              <span class="agenda-tag">Wielrennen</span>
+            </div>
+          </div>
+          <div class="agenda-card reveal">
+            <div class="agenda-date">
+              <div class="day">25</div>
+              <div class="month">Mei</div>
+            </div>
+            <div class="agenda-info">
+              <h4>— BK pol —</h4>
+              <p>Locatie · Afstand</p>
+              <span class="agenda-tag">Wielrennen</span>
+            </div>
+          </div>
+          <div class="agenda-card reveal">
+            <div class="agenda-date">
+              <div class="day">24</div>
+              <div class="month">Jun</div>
+            </div>
+            <div class="agenda-info">
+              <h4>— VWV Wiekevorst —</h4>
+              <p>Locatie · Afstand</p>
+              <span class="agenda-tag">Wielrennen</span>
+            </div>
+          </div>
+        </div>
+        <p
+          style="
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin-top: 1.2rem;
+            font-style: italic;
+          "
+        >
+          Agenda wordt bijgewerkt naargelang inschrijvingen worden bevestigd.
+        </p>
+      </div>
+    </section>
+
+    <!-- GALERIJ -->
+    <section class="section" id="galerij">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Foto's</p>
+          <h2 class="sec-title">Galerij <span class="hl">Jelle</span></h2>
+          <p
+            style="
+              color: var(--muted);
+              font-size: 0.9rem;
+              margin-top: 0.4rem;
+              margin-bottom: 0;
+            "
+          >
+            Een preview van 4 foto's. Klik op de preview of de knop om alle 35
+            foto's te bekijken.
+          </p>
+        </div>
+        <div class="gallery-teaser reveal" id="gallery-teaser"></div>
+        <div style="margin-top: 1.5rem" class="reveal">
+          <button class="btn btn-orange" onclick="openGallery()">
+            📷 &nbsp;Bekijk alle 35 foto's
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="testimonials">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Supporters aan het woord</p>
+          <h2 class="sec-title">
+            Wat zeggen ze over <span class="hl">Jelle</span>?
+          </h2>
+        </div>
+        <div class="testimonials-grid" id="testimonials-container">
+          <div class="testimonial-card reveal">
+            <p class="testimonial-text">
+              Eet ze daar allemaal op straks. Laat dat duifke maar is vliegen!
+              Veel succes 💪
+            </p>
+            <div class="testimonial-name">— Een trotse supporter</div>
+          </div>
+          <div class="testimonial-card reveal">
+            <p class="testimonial-text">
+              Hem zien finishen bij Challenge Almere — kippenvel! Dat vergeet je
+              nooit meer.
+            </p>
+            <div class="testimonial-name">— Aanwezig bij de finish</div>
+          </div>
+        </div>
+        <div class="t-form reveal" style="margin-top: 2.5rem">
+          <h3>Laat jouw boodschap achter 💬</h3>
+          <div class="t-row">
+            <div class="t-field">
+              <label>Jouw naam</label
+              ><input type="text" id="t-name" placeholder="Naam" />
+            </div>
+            <div class="t-field">
+              <label>Korte titel</label
+              ><input
+                type="text"
+                id="t-short"
+                placeholder="bv. 'Aanwezig bij de finish'"
+              />
+            </div>
+          </div>
+          <div class="t-row full">
+            <div class="t-field">
+              <label>Bericht</label
+              ><textarea
+                id="t-text"
+                placeholder="Schrijf hier jouw bericht..."
+              ></textarea>
+            </div>
+          </div>
+          <button class="btn btn-orange" onclick="submitTestimonial()">
+            Verstuur bericht
+          </button>
+          <p id="t-success">✓ Bedankt! Jouw bericht werd toegevoegd.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="inner">
+        <div class="reveal">
+          <p class="sec-label">Neem contact op</p>
+          <h2 class="sec-title">Blijf <span class="hl">Verbonden</span></h2>
+        </div>
+        <div class="contact-wrap">
+          <div class="contact-info reveal">
+            <p>
+              Wil je meer weten over de supportersclub, aanwezig zijn op een
+              wedstrijd, of gewoon een bericht sturen? Neem gerust contact op!
+            </p>
+            <div class="contact-links">
+              <a
+                href="https://www.instagram.com/jelle_naets"
+                target="_blank"
+                class="c-link"
+              >
+                <span class="icon">📸</span
+                ><span>@jelle_naets op Instagram</span>
+              </a>
+              <a href="papa.html" class="c-link">
+                <span class="icon">♥</span><span>Herdenkingspagina Papa</span>
+              </a>
+            </div>
+          </div>
+          <div class="reveal">
+            <form class="c-form" onsubmit="submitContact(event)">
+              <input type="text" placeholder="Jouw naam" required />
+              <input type="email" placeholder="E-mailadres" required />
+              <textarea placeholder="Jouw bericht..." required></textarea>
+              <button type="submit" class="btn btn-orange" style="width: 100%">
+                Verstuur
+              </button>
+              <p
+                id="contact-success"
+                style="display: none; color: var(--orange); font-size: 0.85rem"
+              >
+                ✓ Bericht ontvangen! We nemen spoedig contact op.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="inner foot-inner">
+        <div class="foot-left">
+          <img
+            src="images/logo.png"
+            alt="NJ"
+            onerror="this.style.display = 'none'"
+          />
+          <p class="foot-copy">
+            © 2025 Supportersclub Jelle Naets · Met 🧡 gemaakt voor de
+            supporters.
+          </p>
+        </div>
+        <a href="papa.html" class="foot-papa">Voor Papa ♥</a>
+      </div>
+    </footer>
+
+    <button
+      id="scroll-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      aria-label="Naar boven"
+    >
+      ↑
+    </button>
+
+    <!-- GALLERY OVERLAY -->
+    <div class="gallery-overlay" id="gallery-overlay">
+      <div class="gal-header">
+        <div class="gal-header-title">
+          Galerij <span>Jelle Naets</span> · 35 foto's
+        </div>
+        <button class="gal-close" onclick="closeGallery()">
+          ✕ &nbsp;Sluiten
+        </button>
+      </div>
+      <div class="gal-body" id="jelle-gal-body">
+        <div class="gal-grid" id="jelle-gallery-grid"></div>
+        <button
+          class="gal-totop"
+          id="gal-totop"
+          onclick="galScrollTop()"
+          aria-label="Naar boven"
+        >
+          ↑
+        </button>
+      </div>
+    </div>
+
+    <!-- ZOOM -->
+    <div class="zoom-overlay" id="zoom-overlay">
+      <button class="zoom-close" onclick="closeZoom()">✕</button>
+      <button class="zoom-nav" id="zoom-prev" onclick="navigateZoom(-1)">
+        ‹
+      </button>
+      <img id="zoom-img" src="" alt="Vergroot" />
+      <button class="zoom-nav" id="zoom-next" onclick="navigateZoom(1)">
+        ›
+      </button>
+      <div class="zoom-counter" id="zoom-counter"></div>
+    </div>
+
+    <script>
+      /* Mobile menu */
+      function toggleMenu() {
+        const m = document.getElementById("mobile-menu");
+        m.classList.toggle("open");
+        document.body.style.overflow = m.classList.contains("open")
+          ? "hidden"
+          : "";
+      }
+
+      /* Theme toggle */
+      function toggleTheme(chk) {
+        const dark = chk.checked;
+        document.body.classList.toggle("dark", dark);
+        localStorage.setItem("jelle_theme", dark ? "dark" : "light");
+      }
+      // Apply saved theme on load (default = light)
+      (function () {
+        const saved = localStorage.getItem("jelle_theme");
+        if (saved === "dark") {
+          document.body.classList.add("dark");
+          document.getElementById("theme-chk").checked = true;
+        }
+      })();
+
+      /* Scroll top */
+      window.addEventListener("scroll", () => {
+        document
+          .getElementById("scroll-top")
+          .classList.toggle("visible", window.scrollY > 400);
+      });
+
+      /* Reveal */
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add("visible"), i * 70);
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.07 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+
+      /* Accordion */
+      function toggleAcc(btn) {
+        const body = btn.nextElementSibling;
+        const open = body.classList.contains("open");
+        document
+          .querySelectorAll(".acc-body")
+          .forEach((b) => b.classList.remove("open"));
+        document
+          .querySelectorAll(".acc-trigger")
+          .forEach((b) => b.classList.remove("open"));
+        if (!open) {
+          body.classList.add("open");
+          btn.classList.add("open");
+        }
+      }
+
+      /* Shuffle */
+      function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+      const shuffledJelle = shuffle(
+        Array.from({ length: 35 }, (_, i) => i + 1),
+      );
+
+      /* JPEG/JPG fallback — probeert .jpg → .jpeg → .JPG → .JPEG */
+      function setImgWithFallback(img, base) {
+        const exts = ["jpg", "jpeg", "JPG", "JPEG"];
+        let idx = 0;
+        img.src = `${base}.${exts[idx]}`;
+        img.onerror = function () {
+          idx++;
+          if (idx < exts.length) {
+            img.src = `${base}.${exts[idx]}`;
+          } else {
+            img.style.display = "none"; // geen enkel formaat gevonden
+          }
+        };
+      }
+
+      /* Teaser — 4 preview photos */
+      (function buildTeaser() {
+        const teaser = document.getElementById("gallery-teaser");
+        shuffledJelle.slice(0, 4).forEach((n, idx) => {
+          const div = document.createElement("div");
+          div.className =
+            "gallery-teaser-item" + (idx === 3 ? " last-item" : "");
+          div.onclick = openGallery;
+          const img = document.createElement("img");
+          img.alt = `Jelle ${n}`;
+          img.loading = "lazy";
+          setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
+          div.appendChild(img);
+          teaser.appendChild(div);
+        });
+      })();
+
+      /* Gallery overlay */
+      let galleryBuilt = false;
+      // Random aspect ratios for visual variety (portrait, square, landscape mix)
+      const aspectRatios = [
+        "1/1",
+        "1/1",
+        "1/1", // square (common)
+        "3/4",
+        "3/4", // portrait
+        "4/3",
+        "4/3", // landscape
+        "2/3", // tall portrait
+        "3/2", // wide landscape
+        "5/6", // slightly tall
+      ];
+      function randAspect() {
+        return aspectRatios[Math.floor(Math.random() * aspectRatios.length)];
+      }
+
+      function openGallery() {
+        document.getElementById("gallery-overlay").classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (!galleryBuilt) {
+          const grid = document.getElementById("jelle-gallery-grid");
+          shuffledJelle.forEach((n) => {
+            const img = document.createElement("img");
+            img.alt = `Jelle ${n}`;
+            img.loading = "lazy";
+            img.style.aspectRatio = randAspect();
+            img.style.objectFit = "cover";
+            img.onclick = () => openZoom(img, grid);
+            setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
+            grid.appendChild(img);
+          });
+          galleryBuilt = true;
+        }
+      }
+      function closeGallery() {
+        document.getElementById("gallery-overlay").classList.remove("open");
+        if (!document.getElementById("zoom-overlay").classList.contains("open"))
+          document.body.style.overflow = "";
+      }
+
+      /* Scroll-to-top inside gallery */
+      function galScrollTop() {
+        document
+          .getElementById("jelle-gal-body")
+          .scrollTo({ top: 0, behavior: "smooth" });
+      }
+      document
+        .getElementById("jelle-gal-body")
+        .addEventListener("scroll", function () {
+          const btn = document.getElementById("gal-totop");
+          btn.classList.toggle("visible", this.scrollTop > 300);
+        });
+
+      /* Zoom */
+      let zoomImgs = [],
+        zoomIdx = 0;
+      function openZoom(img, container) {
+        zoomImgs = Array.from(container.querySelectorAll("img"));
+        zoomIdx = zoomImgs.indexOf(img);
+        showZoom();
+      }
+      function showZoom() {
+        const zi = document.getElementById("zoom-img");
+        zi.style.opacity = "0";
+        setTimeout(() => {
+          zi.src = zoomImgs[zoomIdx].src;
+          zi.style.opacity = "1";
+        }, 110);
+        document.getElementById("zoom-counter").textContent =
+          zoomIdx + 1 + " / " + zoomImgs.length;
+        document.getElementById("zoom-overlay").classList.add("open");
+      }
+      function navigateZoom(dir) {
+        event.stopPropagation();
+        zoomIdx = (zoomIdx + dir + zoomImgs.length) % zoomImgs.length;
+        showZoom();
+      }
+      function closeZoom() {
+        document.getElementById("zoom-overlay").classList.remove("open");
+      }
+      document.getElementById("zoom-overlay").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("zoom-overlay")) closeZoom();
+      });
+      document.addEventListener("keydown", (e) => {
+        const z = document
+          .getElementById("zoom-overlay")
+          .classList.contains("open");
+        const g = document
+          .getElementById("gallery-overlay")
+          .classList.contains("open");
+        if (e.key === "Escape") {
+          if (z) closeZoom();
+          else if (g) closeGallery();
+        }
+        if (z && e.key === "ArrowRight") navigateZoom(1);
+        if (z && e.key === "ArrowLeft") navigateZoom(-1);
+      });
+
+      /* Testimonials */
+      (function loadTestimonials() {
+        JSON.parse(localStorage.getItem("jelle_testimonials") || "[]").forEach(
+          (t) => {
+            const c = document.createElement("div");
+            c.className = "testimonial-card";
+            c.innerHTML = `<p class="testimonial-text">${t.text}</p><div class="testimonial-name">— ${t.name}</div>`;
+            document.getElementById("testimonials-container").appendChild(c);
+          },
+        );
+      })();
+      function submitTestimonial() {
+        const name = document.getElementById("t-name").value.trim();
+        const text = document.getElementById("t-text").value.trim();
+        if (!name || !text) return;
+        const saved = JSON.parse(
+          localStorage.getItem("jelle_testimonials") || "[]",
+        );
+        saved.push({ name, text });
+        localStorage.setItem("jelle_testimonials", JSON.stringify(saved));
+        const c = document.createElement("div");
+        c.className = "testimonial-card";
+        c.innerHTML = `<p class="testimonial-text">${text}</p><div class="testimonial-name">— ${name}</div>`;
+        document.getElementById("testimonials-container").appendChild(c);
+        document.getElementById("t-name").value = "";
+        document.getElementById("t-text").value = "";
+        document.getElementById("t-short").value = "";
+        const s = document.getElementById("t-success");
+        s.style.display = "block";
+        setTimeout(() => (s.style.display = "none"), 4000);
+      }
+
+      /* Contact */
+      function submitContact(e) {
+        e.preventDefault();
+        const s = document.getElementById("contact-success");
+        s.style.display = "block";
+        e.target.reset();
+        setTimeout(() => (s.style.display = "none"), 5000);
+      }
+    </script>
+  </body>
+</html>
