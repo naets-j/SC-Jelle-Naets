@@ -916,6 +916,8 @@
           }
 
           nums.forEach((n) => {
+            const exts = ["jpg", "jpeg"];
+            let extIdx = 0;
             const img = document.createElement("img");
             img.alt = `Papa foto ${n}`;
             img.style.aspectRatio = randAspect();
@@ -930,12 +932,13 @@
               }
             };
             img.onerror = () => {
-              if (!img._triedJpeg) {
-                img._triedJpeg = true;
-                img.src = `images/papa-galerij/foto-${n}.jpeg`;
+              extIdx++;
+              if (extIdx < exts.length) {
+                img.src = `images/papa-galerij/foto-${n}.${exts[extIdx]}`;
               }
+              // alle extensies geprobeerd en mislukt → foto bestaat niet, niets doen
             };
-            img.src = `images/papa-galerij/foto-${n}.jpg`;
+            img.src = `images/papa-galerij/foto-${n}.${exts[extIdx]}`;
           });
         }
       }
