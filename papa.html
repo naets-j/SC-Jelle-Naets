@@ -593,69 +593,12 @@
     <div class="back-bar">
       <div class="back-inner">
         <a href="index.html" class="back-link">← Terug naar de website</a>
-        <div style="display: flex; align-items: center; gap: 1rem">
-          <button
-            id="music-toggle"
-            onclick="toggleMusic()"
-            title="Muziek aan/uit"
-            style="
-              display: none;
-              background: none;
-              border: none;
-              cursor: pointer;
-              padding: 0.2rem 0.3rem;
-              line-height: 1;
-              position: relative;
-              transition: opacity 0.2s;
-            "
-          >
-            <svg
-              id="music-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style="display: block"
-            >
-              <path
-                d="M9 18V5l12-2v13"
-                stroke="#6b6560"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <circle
-                cx="6"
-                cy="18"
-                r="3"
-                stroke="#6b6560"
-                stroke-width="1.6"
-              />
-              <circle
-                cx="18"
-                cy="16"
-                r="3"
-                stroke="#6b6560"
-                stroke-width="1.6"
-              />
-            </svg>
-            <line
-              id="music-mute-line"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="0"
-              style="display: none"
-            />
-          </button>
-          <div class="back-logo">
-            <img
-              src="images/logo.png"
-              alt="NJ"
-              onerror="this.style.display = 'none'"
-            />
-          </div>
+        <div class="back-logo">
+          <img
+            src="images/logo.png"
+            alt="NJ"
+            onerror="this.style.display = 'none'"
+          />
         </div>
       </div>
     </div>
@@ -775,9 +718,33 @@
     <div class="gallery-overlay" id="gallery-overlay">
       <div class="gal-header">
         <div class="gal-title">Galerij <span>Papa</span> · foto's</div>
-        <button class="gal-close" onclick="closeGallery()">
-          ✕ &nbsp;Sluiten
-        </button>
+        <div style="display: flex; align-items: center; gap: 0.7rem">
+          <button
+            id="music-toggle"
+            onclick="toggleMusic()"
+            title="Muziek aan/uit"
+            aria-label="Muziek aan/uit"
+            style="
+              width: 38px;
+              height: 38px;
+              background: rgba(255, 255, 255, 0.08);
+              border: 1px solid rgba(255, 255, 255, 0.18);
+              border-radius: 4px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.1rem;
+              transition: background 0.2s;
+              box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            "
+          >
+            ♪
+          </button>
+          <button class="gal-close" onclick="closeGallery()">
+            ✕ &nbsp;Sluiten
+          </button>
+        </div>
       </div>
       <div class="gal-body" id="papa-gal-body">
         <div class="gal-grid" id="papa-gallery-grid"></div>
@@ -886,19 +853,15 @@
 
       function updateMusicIcon() {
         const btn = document.getElementById("music-toggle");
-        const isMuted = musicMuted;
-        btn.innerHTML = isMuted
-          ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-               <path d="M9 18V5l12-2v13" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-               <circle cx="6" cy="18" r="3" stroke="#6b6560" stroke-width="1.6"/>
-               <circle cx="18" cy="16" r="3" stroke="#6b6560" stroke-width="1.6"/>
-               <line x1="3" y1="3" x2="21" y2="21" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round"/>
-             </svg>`
-          : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-               <path d="M9 18V5l12-2v13" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-               <circle cx="6" cy="18" r="3" stroke="#6b6560" stroke-width="1.6"/>
-               <circle cx="18" cy="16" r="3" stroke="#6b6560" stroke-width="1.6"/>
-             </svg>`;
+        if (musicMuted) {
+          btn.innerHTML = `<span style="position:relative;display:inline-block;line-height:1;">♪<span style="position:absolute;top:50%;left:50%;width:130%;height:2px;background:#f5f0e8;transform:translate(-50%,-50%) rotate(-45deg);border-radius:2px;"></span></span>`;
+          btn.style.background = "rgba(255,255,255,0.04)";
+          btn.style.opacity = "0.55";
+        } else {
+          btn.textContent = "♪";
+          btn.style.background = "rgba(255,255,255,0.08)";
+          btn.style.opacity = "1";
+        }
       }
 
       function playGalleryMusic() {
@@ -921,7 +884,6 @@
           { once: true },
         );
         a1.play().catch(() => {});
-        document.getElementById("music-toggle").style.display = "inline-block";
       }
 
       function stopGalleryMusic() {
