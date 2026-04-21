@@ -813,28 +813,6 @@
         return arr;
       }
 
-      /* JPEG/JPG fallback — probeert .jpg → .jpeg → .JPG → .JPEG */
-      /* Geeft een Promise terug: resolve(img) bij succes, reject() als geen enkele ext werkt */
-      function setImgWithFallback(img, base) {
-        return new Promise((resolve, reject) => {
-          const exts = ["jpg", "jpeg", "JPG", "JPEG"];
-          let idx = 0;
-          function tryNext() {
-            if (idx >= exts.length) {
-              reject();
-              return;
-            }
-            img.src = `${base}.${exts[idx]}`;
-            img.onload = () => resolve(img);
-            img.onerror = () => {
-              idx++;
-              tryNext();
-            };
-          }
-          tryNext();
-        });
-      }
-
       /* Gallery overlay */
       let galleryBuilt = false;
       const aspectRatios = [
@@ -921,35 +899,6 @@
         updateMusicIcon();
       }
 
-      /* Laadt alle foto's dynamisch: probeert foto-1, foto-2, … tot er geen meer bestaat.
-         Gebruikt een verborgen Image() voor de detectie zodat lazy-loading de onload
-         niet blokkeert, en maakt daarna pas het zichtbare <img> element aan. */
-      async function buildGallery(grid) {
-        const loadedImgs = [];
-        let n = 1;
-        while (true) {
-          const probe = new Image(); // verborgen detector, geen lazy-loading
-          try {
-            await setImgWithFallback(probe, `images/papa-galerij/foto-${n}`);
-            // Foto bestaat — maak zichtbaar element aan met de bevestigde src
-            const img = document.createElement("img");
-            img.alt = `Papa foto ${n}`;
-            img.src = probe.src;
-            img.loading = "lazy";
-            img.style.aspectRatio = randAspect();
-            img.style.objectFit = "cover";
-            img.onclick = () => openZoom(img, grid);
-            loadedImgs.push(img);
-            n++;
-          } catch {
-            // Geen foto meer gevonden — stop
-            break;
-          }
-        }
-        // Shuffle en voeg toe aan grid
-        shuffle(loadedImgs).forEach((img) => grid.appendChild(img));
-      }
-
       function openGallery() {
         document.getElementById("gallery-overlay").classList.add("open");
         document.body.style.overflow = "hidden";
@@ -957,7 +906,32 @@
         if (!galleryBuilt) {
           galleryBuilt = true;
           const grid = document.getElementById("papa-gallery-grid");
-          buildGallery(grid);
+          // Maak een willekeurig geshufflede lijst van 1..200 en voeg elke foto toe.
+          // Foto's die niet bestaan worden automatisch verborgen via onerror.
+          const MAX = 200;
+          const nums = Array.from({ length: MAX }, (_, i) => i + 1);
+          for (let i = nums.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+          }
+          nums.forEach((n) => {
+            const img = document.createElement("img");
+            img.alt = `Papa foto ${n}`;
+            img.loading = "lazy";
+            img.style.aspectRatio = randAspect();
+            img.style.objectFit = "cover";
+            img.onclick = () => openZoom(img, grid);
+            img.src = `images/papa-galerij/foto-${n}.jpg`;
+            img.onerror = function () {
+              if (!this._triedJpeg) {
+                this._triedJpeg = true;
+                this.src = `images/papa-galerij/foto-${n}.jpeg`;
+              } else {
+                this.style.display = "none";
+              }
+            };
+            grid.appendChild(img);
+          });
         }
       }
       function closeGallery() {
