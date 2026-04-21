@@ -921,18 +921,23 @@
         updateMusicIcon();
       }
 
-      /* Laadt alle foto's dynamisch: probeert foto-1, foto-2, … tot er geen meer bestaat */
+      /* Laadt alle foto's dynamisch: probeert foto-1, foto-2, … tot er geen meer bestaat.
+         Gebruikt een verborgen Image() voor de detectie zodat lazy-loading de onload
+         niet blokkeert, en maakt daarna pas het zichtbare <img> element aan. */
       async function buildGallery(grid) {
         const loadedImgs = [];
         let n = 1;
         while (true) {
-          const img = document.createElement("img");
-          img.alt = `Papa foto ${n}`;
-          img.loading = "lazy";
-          img.style.aspectRatio = randAspect();
-          img.style.objectFit = "cover";
+          const probe = new Image(); // verborgen detector, geen lazy-loading
           try {
-            await setImgWithFallback(img, `images/papa-galerij/foto-${n}`);
+            await setImgWithFallback(probe, `images/papa-galerij/foto-${n}`);
+            // Foto bestaat — maak zichtbaar element aan met de bevestigde src
+            const img = document.createElement("img");
+            img.alt = `Papa foto ${n}`;
+            img.src = probe.src;
+            img.loading = "lazy";
+            img.style.aspectRatio = randAspect();
+            img.style.objectFit = "cover";
             img.onclick = () => openZoom(img, grid);
             loadedImgs.push(img);
             n++;
