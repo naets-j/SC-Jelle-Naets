@@ -2133,45 +2133,47 @@
         }
         return arr;
       }
-      const shuffledJelle = shuffle(
-        Array.from({ length: 35 }, (_, i) => i + 1),
-      );
 
       /* JPEG/JPG fallback — probeert .jpg → .jpeg → .JPG → .JPEG */
+      /* Geeft een Promise terug: resolve(url) bij succes, reject() als niets werkt */
       function setImgWithFallback(img, base) {
-        const exts = ["jpg", "jpeg", "JPG", "JPEG"];
-        let idx = 0;
-        img.src = `${base}.${exts[idx]}`;
-        img.onerror = function () {
-          idx++;
-          if (idx < exts.length) {
+        return new Promise((resolve, reject) => {
+          const exts = ["jpg", "jpeg", "JPG", "JPEG"];
+          let idx = 0;
+          function tryNext() {
+            if (idx >= exts.length) {
+              reject();
+              return;
+            }
             img.src = `${base}.${exts[idx]}`;
-          } else {
-            img.style.display = "none"; // geen enkel formaat gevonden
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+              idx++;
+              tryNext();
+            };
           }
-        };
+          tryNext();
+        });
       }
 
-      /* Teaser — 4 preview photos */
-      (function buildTeaser() {
-        const teaser = document.getElementById("gallery-teaser");
-        shuffledJelle.slice(0, 4).forEach((n, idx) => {
-          const div = document.createElement("div");
-          div.className =
-            "gallery-teaser-item" + (idx === 3 ? " last-item" : "");
-          div.onclick = openGallery;
-          const img = document.createElement("img");
-          img.alt = `Jelle ${n}`;
-          img.loading = "lazy";
-          setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
-          div.appendChild(img);
-          teaser.appendChild(div);
-        });
-      })();
+      /* Ontdek alle foto's dynamisch door te proberen tot er geen meer bestaat */
+      async function discoverPhotos(folder) {
+        const imgs = [];
+        let n = 1;
+        while (true) {
+          const img = new Image();
+          try {
+            await setImgWithFallback(img, `images/${folder}/foto-${n}`);
+            imgs.push({ n, src: img.src });
+            n++;
+          } catch {
+            break;
+          }
+        }
+        return shuffle(imgs);
+      }
 
-      /* Gallery overlay */
-      let galleryBuilt = false;
-      // Random aspect ratios for visual variety (portrait, square, landscape mix)
+      /* Random aspect ratios for visual variety (portrait, square, landscape mix) */
       const aspectRatios = [
         "1/1",
         "1/1",
@@ -2188,22 +2190,61 @@
         return aspectRatios[Math.floor(Math.random() * aspectRatios.length)];
       }
 
+      /* Gallery overlay */
+      let galleryBuilt = false;
+      let discoveredPhotos = null; // cache na eerste ontdekking
+
+      /* Teaser — 4 preview photos (gebouwd na ontdekking) */
+      function buildTeaser(photos) {
+        const teaser = document.getElementById("gallery-teaser");
+        teaser.innerHTML = "";
+        photos.slice(0, 4).forEach(({ n, src }, idx) => {
+          const div = document.createElement("div");
+          div.className =
+            "gallery-teaser-item" + (idx === 3 ? " last-item" : "");
+          div.onclick = openGallery;
+          const img = document.createElement("img");
+          img.alt = `Jelle ${n}`;
+          img.loading = "lazy";
+          img.src = src;
+          div.appendChild(img);
+          teaser.appendChild(div);
+        });
+      }
+
+      /* Start foto-ontdekking meteen bij laden */
+      discoverPhotos("jelle-galerij").then((photos) => {
+        discoveredPhotos = photos;
+        buildTeaser(photos);
+      });
+
       function openGallery() {
         document.getElementById("gallery-overlay").classList.add("open");
         document.body.style.overflow = "hidden";
         if (!galleryBuilt) {
-          const grid = document.getElementById("jelle-gallery-grid");
-          shuffledJelle.forEach((n) => {
-            const img = document.createElement("img");
-            img.alt = `Jelle ${n}`;
-            img.loading = "lazy";
-            img.style.aspectRatio = randAspect();
-            img.style.objectFit = "cover";
-            img.onclick = () => openZoom(img, grid);
-            setImgWithFallback(img, `images/jelle-galerij/foto-${n}`);
-            grid.appendChild(img);
-          });
           galleryBuilt = true;
+          const grid = document.getElementById("jelle-gallery-grid");
+          function populateGrid(photos) {
+            photos.forEach(({ n, src }) => {
+              const img = document.createElement("img");
+              img.alt = `Jelle ${n}`;
+              img.loading = "lazy";
+              img.style.aspectRatio = randAspect();
+              img.style.objectFit = "cover";
+              img.src = src;
+              img.onclick = () => openZoom(img, grid);
+              grid.appendChild(img);
+            });
+          }
+          if (discoveredPhotos) {
+            populateGrid(discoveredPhotos);
+          } else {
+            // Nog niet klaar — wacht op ontdekking
+            discoverPhotos("jelle-galerij").then((photos) => {
+              discoveredPhotos = photos;
+              populateGrid(photos);
+            });
+          }
         }
       }
       function closeGallery() {

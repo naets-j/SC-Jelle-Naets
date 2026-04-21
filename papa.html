@@ -812,21 +812,27 @@
         }
         return arr;
       }
-      const shuffledPapa = shuffle(Array.from({ length: 45 }, (_, i) => i + 1));
 
       /* JPEG/JPG fallback — probeert .jpg → .jpeg → .JPG → .JPEG */
+      /* Geeft een Promise terug: resolve(img) bij succes, reject() als geen enkele ext werkt */
       function setImgWithFallback(img, base) {
-        const exts = ["jpg", "jpeg", "JPG", "JPEG"];
-        let idx = 0;
-        img.src = `${base}.${exts[idx]}`;
-        img.onerror = function () {
-          idx++;
-          if (idx < exts.length) {
+        return new Promise((resolve, reject) => {
+          const exts = ["jpg", "jpeg", "JPG", "JPEG"];
+          let idx = 0;
+          function tryNext() {
+            if (idx >= exts.length) {
+              reject();
+              return;
+            }
             img.src = `${base}.${exts[idx]}`;
-          } else {
-            img.style.display = "none";
+            img.onload = () => resolve(img);
+            img.onerror = () => {
+              idx++;
+              tryNext();
+            };
           }
-        };
+          tryNext();
+        });
       }
 
       /* Gallery overlay */
@@ -915,23 +921,38 @@
         updateMusicIcon();
       }
 
+      /* Laadt alle foto's dynamisch: probeert foto-1, foto-2, … tot er geen meer bestaat */
+      async function buildGallery(grid) {
+        const loadedImgs = [];
+        let n = 1;
+        while (true) {
+          const img = document.createElement("img");
+          img.alt = `Papa foto ${n}`;
+          img.loading = "lazy";
+          img.style.aspectRatio = randAspect();
+          img.style.objectFit = "cover";
+          try {
+            await setImgWithFallback(img, `images/papa-galerij/foto-${n}`);
+            img.onclick = () => openZoom(img, grid);
+            loadedImgs.push(img);
+            n++;
+          } catch {
+            // Geen foto meer gevonden — stop
+            break;
+          }
+        }
+        // Shuffle en voeg toe aan grid
+        shuffle(loadedImgs).forEach((img) => grid.appendChild(img));
+      }
+
       function openGallery() {
         document.getElementById("gallery-overlay").classList.add("open");
         document.body.style.overflow = "hidden";
         playGalleryMusic();
         if (!galleryBuilt) {
-          const grid = document.getElementById("papa-gallery-grid");
-          shuffledPapa.forEach((n) => {
-            const img = document.createElement("img");
-            img.alt = `Papa foto ${n}`;
-            img.loading = "lazy";
-            img.style.aspectRatio = randAspect();
-            img.style.objectFit = "cover";
-            img.onclick = () => openZoom(img, grid);
-            setImgWithFallback(img, `images/papa-galerij/foto-${n}`);
-            grid.appendChild(img);
-          });
           galleryBuilt = true;
+          const grid = document.getElementById("papa-gallery-grid");
+          buildGallery(grid);
         }
       }
       function closeGallery() {
