@@ -593,12 +593,69 @@
     <div class="back-bar">
       <div class="back-inner">
         <a href="index.html" class="back-link">← Terug naar de website</a>
-        <div class="back-logo">
-          <img
-            src="images/logo.png"
-            alt="NJ"
-            onerror="this.style.display = 'none'"
-          />
+        <div style="display: flex; align-items: center; gap: 1rem">
+          <button
+            id="music-toggle"
+            onclick="toggleMusic()"
+            title="Muziek aan/uit"
+            style="
+              display: none;
+              background: none;
+              border: none;
+              cursor: pointer;
+              padding: 0.2rem 0.3rem;
+              line-height: 1;
+              position: relative;
+              transition: opacity 0.2s;
+            "
+          >
+            <svg
+              id="music-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="display: block"
+            >
+              <path
+                d="M9 18V5l12-2v13"
+                stroke="#6b6560"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="6"
+                cy="18"
+                r="3"
+                stroke="#6b6560"
+                stroke-width="1.6"
+              />
+              <circle
+                cx="18"
+                cy="16"
+                r="3"
+                stroke="#6b6560"
+                stroke-width="1.6"
+              />
+            </svg>
+            <line
+              id="music-mute-line"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="0"
+              style="display: none"
+            />
+          </button>
+          <div class="back-logo">
+            <img
+              src="images/logo.png"
+              alt="NJ"
+              onerror="this.style.display = 'none'"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -707,8 +764,11 @@
     </button>
 
     <!-- ACHTERGRONDMUZIEK -->
-    <audio id="gallery-audio" preload="auto">
-      <source src="images/muziek.mp3" type="audio/mpeg" />
+    <audio id="gallery-audio-1" preload="auto">
+      <source src="images/muziek-1.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="gallery-audio-2" preload="auto">
+      <source src="images/muziek-2.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- GALLERY OVERLAY -->
@@ -810,19 +870,77 @@
         return aspectRatios[Math.floor(Math.random() * aspectRatios.length)];
       }
 
-      /* Muziek — speelt 1x bij openen galerij */
+      /* Muziek — 2 nummers na elkaar, 1x afspelen */
       let musicPlayed = false;
+      let musicMuted = false;
+      let currentTrack = 1;
+
+      const tracks = {
+        1: () => document.getElementById("gallery-audio-1"),
+        2: () => document.getElementById("gallery-audio-2"),
+      };
+
+      function currentAudio() {
+        return tracks[currentTrack]();
+      }
+
+      function updateMusicIcon() {
+        const btn = document.getElementById("music-toggle");
+        const isMuted = musicMuted;
+        btn.innerHTML = isMuted
+          ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+               <path d="M9 18V5l12-2v13" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+               <circle cx="6" cy="18" r="3" stroke="#6b6560" stroke-width="1.6"/>
+               <circle cx="18" cy="16" r="3" stroke="#6b6560" stroke-width="1.6"/>
+               <line x1="3" y1="3" x2="21" y2="21" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round"/>
+             </svg>`
+          : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+               <path d="M9 18V5l12-2v13" stroke="#6b6560" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+               <circle cx="6" cy="18" r="3" stroke="#6b6560" stroke-width="1.6"/>
+               <circle cx="18" cy="16" r="3" stroke="#6b6560" stroke-width="1.6"/>
+             </svg>`;
+      }
+
       function playGalleryMusic() {
         if (musicPlayed) return;
-        const audio = document.getElementById("gallery-audio");
-        audio.volume = 0.35;
-        audio.play().catch(() => {}); // autoplay kan geblokkeerd zijn
         musicPlayed = true;
+        currentTrack = 1;
+        const a1 = document.getElementById("gallery-audio-1");
+        const a2 = document.getElementById("gallery-audio-2");
+        a1.volume = 0.35;
+        a2.volume = 0.35;
+        // Als nummer 1 klaar is, start nummer 2
+        a1.addEventListener(
+          "ended",
+          () => {
+            if (!musicMuted) {
+              currentTrack = 2;
+              a2.play().catch(() => {});
+            }
+          },
+          { once: true },
+        );
+        a1.play().catch(() => {});
+        document.getElementById("music-toggle").style.display = "inline-block";
       }
+
       function stopGalleryMusic() {
-        const audio = document.getElementById("gallery-audio");
-        audio.pause();
-        audio.currentTime = 0;
+        [1, 2].forEach((n) => {
+          const a = document.getElementById(`gallery-audio-${n}`);
+          a.pause();
+          a.currentTime = 0;
+        });
+      }
+
+      function toggleMusic() {
+        musicMuted = !musicMuted;
+        const audio = currentAudio();
+        if (musicMuted) {
+          audio.pause();
+        } else {
+          audio.play().catch(() => {});
+        }
+        updateMusicIcon();
       }
 
       function openGallery() {
