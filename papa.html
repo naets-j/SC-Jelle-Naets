@@ -706,6 +706,11 @@
       ↑
     </button>
 
+    <!-- ACHTERGRONDMUZIEK -->
+    <audio id="gallery-audio" preload="auto">
+      <source src="images/muziek.mp3" type="audio/mpeg" />
+    </audio>
+
     <!-- GALLERY OVERLAY -->
     <div class="gallery-overlay" id="gallery-overlay">
       <div class="gal-header">
@@ -805,9 +810,25 @@
         return aspectRatios[Math.floor(Math.random() * aspectRatios.length)];
       }
 
+      /* Muziek — speelt 1x bij openen galerij */
+      let musicPlayed = false;
+      function playGalleryMusic() {
+        if (musicPlayed) return;
+        const audio = document.getElementById("gallery-audio");
+        audio.volume = 0.35;
+        audio.play().catch(() => {}); // autoplay kan geblokkeerd zijn
+        musicPlayed = true;
+      }
+      function stopGalleryMusic() {
+        const audio = document.getElementById("gallery-audio");
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
       function openGallery() {
         document.getElementById("gallery-overlay").classList.add("open");
         document.body.style.overflow = "hidden";
+        playGalleryMusic();
         if (!galleryBuilt) {
           const grid = document.getElementById("papa-gallery-grid");
           shuffledPapa.forEach((n) => {
@@ -825,6 +846,7 @@
       }
       function closeGallery() {
         document.getElementById("gallery-overlay").classList.remove("open");
+        stopGalleryMusic();
         if (!document.getElementById("zoom-overlay").classList.contains("open"))
           document.body.style.overflow = "";
       }
