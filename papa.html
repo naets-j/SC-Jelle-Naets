@@ -906,56 +906,36 @@
         if (!galleryBuilt) {
           galleryBuilt = true;
           const grid = document.getElementById("papa-gallery-grid");
+          window._galleryLoadedImgs = [];
 
-          // Probeer foto's 1..200 maar voeg enkel toe wat écht bestaat.
-          // loadedImgs bevat alleen de geslaagde img-elementen (voor de zoom-teller).
           const MAX = 200;
           const nums = Array.from({ length: MAX }, (_, i) => i + 1);
-          // Shuffle
           for (let i = nums.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [nums[i], nums[j]] = [nums[j], nums[i]];
           }
 
-          // Laad alle foto's in parallel; voeg enkel toe bij succes.
-          const promises = nums.map((n) => {
-            return new Promise((resolve) => {
-              const tryLoad = (src, fallback) => {
-                const img = document.createElement("img");
-                img.alt = `Papa foto ${n}`;
-                img.loading = "lazy";
-                img.style.aspectRatio = randAspect();
-                img.style.objectFit = "cover";
-                img.src = src;
-                img.onload = () => resolve(img);
-                img.onerror = () => {
-                  if (fallback) {
-                    tryLoad(fallback, null);
-                  } else {
-                    resolve(null); // foto bestaat niet
-                  }
-                };
-              };
-              tryLoad(
-                `images/papa-galerij/foto-${n}.jpg`,
-                `images/papa-galerij/foto-${n}.jpeg`,
-              );
-            });
-          });
-
-          Promise.all(promises).then((results) => {
-            const loaded = results.filter(Boolean);
-            loaded.forEach((img) => {
-              img.onclick = () => openZoom(img, grid);
+          nums.forEach((n) => {
+            const img = document.createElement("img");
+            img.alt = `Papa foto ${n}`;
+            img.style.aspectRatio = randAspect();
+            img.style.objectFit = "cover";
+            img.onload = () => {
+              img.onclick = () => openZoom(img);
               grid.appendChild(img);
-            });
-            // Sla de echte lijst op voor de zoom-navigatie
-            window._galleryLoadedImgs = loaded;
-            // Titel updaten
-            const titleEl = document.querySelector(".gal-title");
-            if (titleEl) {
-              titleEl.innerHTML = `Galerij <span>Papa</span> · ${loaded.length} foto's`;
-            }
+              window._galleryLoadedImgs.push(img);
+              const titleEl = document.querySelector(".gal-title");
+              if (titleEl) {
+                titleEl.innerHTML = `Galerij <span>Papa</span> · ${window._galleryLoadedImgs.length} foto's`;
+              }
+            };
+            img.onerror = () => {
+              if (!img._triedJpeg) {
+                img._triedJpeg = true;
+                img.src = `images/papa-galerij/foto-${n}.jpeg`;
+              }
+            };
+            img.src = `images/papa-galerij/foto-${n}.jpg`;
           });
         }
       }
