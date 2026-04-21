@@ -906,31 +906,56 @@
         if (!galleryBuilt) {
           galleryBuilt = true;
           const grid = document.getElementById("papa-gallery-grid");
-          // Maak een willekeurig geshufflede lijst van 1..200 en voeg elke foto toe.
-          // Foto's die niet bestaan worden automatisch verborgen via onerror.
+
+          // Probeer foto's 1..200 maar voeg enkel toe wat écht bestaat.
+          // loadedImgs bevat alleen de geslaagde img-elementen (voor de zoom-teller).
           const MAX = 200;
           const nums = Array.from({ length: MAX }, (_, i) => i + 1);
+          // Shuffle
           for (let i = nums.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [nums[i], nums[j]] = [nums[j], nums[i]];
           }
-          nums.forEach((n) => {
-            const img = document.createElement("img");
-            img.alt = `Papa foto ${n}`;
-            img.loading = "lazy";
-            img.style.aspectRatio = randAspect();
-            img.style.objectFit = "cover";
-            img.onclick = () => openZoom(img, grid);
-            img.src = `images/papa-galerij/foto-${n}.jpg`;
-            img.onerror = function () {
-              if (!this._triedJpeg) {
-                this._triedJpeg = true;
-                this.src = `images/papa-galerij/foto-${n}.jpeg`;
-              } else {
-                this.style.display = "none";
-              }
-            };
-            grid.appendChild(img);
+
+          // Laad alle foto's in parallel; voeg enkel toe bij succes.
+          const promises = nums.map((n) => {
+            return new Promise((resolve) => {
+              const tryLoad = (src, fallback) => {
+                const img = document.createElement("img");
+                img.alt = `Papa foto ${n}`;
+                img.loading = "lazy";
+                img.style.aspectRatio = randAspect();
+                img.style.objectFit = "cover";
+                img.src = src;
+                img.onload = () => resolve(img);
+                img.onerror = () => {
+                  if (fallback) {
+                    tryLoad(fallback, null);
+                  } else {
+                    resolve(null); // foto bestaat niet
+                  }
+                };
+              };
+              tryLoad(
+                `images/papa-galerij/foto-${n}.jpg`,
+                `images/papa-galerij/foto-${n}.jpeg`,
+              );
+            });
+          });
+
+          Promise.all(promises).then((results) => {
+            const loaded = results.filter(Boolean);
+            loaded.forEach((img) => {
+              img.onclick = () => openZoom(img, grid);
+              grid.appendChild(img);
+            });
+            // Sla de echte lijst op voor de zoom-navigatie
+            window._galleryLoadedImgs = loaded;
+            // Titel updaten
+            const titleEl = document.querySelector(".gal-title");
+            if (titleEl) {
+              titleEl.innerHTML = `Galerij <span>Papa</span> · ${loaded.length} foto's`;
+            }
           });
         }
       }
@@ -957,9 +982,11 @@
       /* Zoom */
       let zoomImgs = [],
         zoomIdx = 0;
-      function openZoom(img, container) {
-        zoomImgs = Array.from(container.querySelectorAll("img"));
+      function openZoom(img) {
+        // Gebruik de écht geladen foto's (ingevuld na Promise.all)
+        zoomImgs = window._galleryLoadedImgs || [];
         zoomIdx = zoomImgs.indexOf(img);
+        if (zoomIdx === -1) zoomIdx = 0;
         showZoom();
       }
       function showZoom() {
